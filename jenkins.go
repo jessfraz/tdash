@@ -64,7 +64,7 @@ func doJenkinsCI() {
 		}
 
 		if showAllBuilds || build.Raw.Result != "SUCCESS" {
-			fmt.Fprintf(w, "%s\t%s\t%s\n", job.Raw.DisplayName, build.Raw.Result, time.Unix(build.Raw.Timestamp, 0).Format(time.RFC3339))
+			fmt.Fprintf(w, "%s\t%s\t%s\n", job.Raw.DisplayName, build.Raw.Result, time.Unix(0, int64(time.Millisecond)*build.Raw.Timestamp).Format(time.RFC3339))
 		}
 
 	}
