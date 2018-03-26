@@ -70,4 +70,5 @@ func doJenkinsCI() {
 	}
 
 	w.Flush()
+	fmt.Println()
 }

@@ -59,4 +59,5 @@ func doTravisCI() {
 	}
 
 	w.Flush()
+	fmt.Println()
 }
