@@ -40,7 +40,7 @@ $ dash -h
  \__,_|\__,_|___/_| |_|
 
 
- A single page dashboard with stats from
+ A terminal dashboard with stats from
  Google Analytics, GitHub, Travis CI, and Jenkins.
  Version: v0.0.0
  Build: 338723b
