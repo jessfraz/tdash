@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"text/tabwriter"
 
@@ -16,12 +17,17 @@ import (
 	ga "google.golang.org/api/analyticsreporting/v4"
 )
 
+const (
+	gaPrefix = "ga:"
+)
+
 // Client holds the information for a Google Analytics reporting client.
 type Client struct {
-	config    *jwt.Config
-	client    *http.Client
-	service   *ga.Service
-	servicev3 *gav3.Service
+	config          *jwt.Config
+	client          *http.Client
+	service         *ga.Service
+	servicev3       *gav3.Service
+	realtimeService *gav3.DataRealtimeService
 }
 
 // New takes a keyfile for auththentication and
@@ -74,6 +80,7 @@ func New(keyfile string, debug bool) (*Client, error) {
 	if err != nil {
 		return nil, fmt.Errorf("creating the analytics reporting service v3 object failed: %v", err)
 	}
+	client.realtimeService = gav3.NewDataRealtimeService(client.servicev3)
 
 	return client, nil
 }
@@ -111,6 +118,22 @@ func (c *Client) GetReport(viewID string) (*ga.GetReportsResponse, error) {
 	return c.service.Reports.BatchGet(req).Do()
 }
 
+// GetRealtimeActiveUsers queries the Analytics Realtime Reporting API V3 using the
+// Analytics Reporting API V3 service object.
+// It returns the Analytics Realtime Reporting API V3 response
+// for how many active users are currently on the site.
+func (c *Client) GetRealtimeActiveUsers(viewID string) (string, error) {
+	metric := "rt:activeUsers"
+
+	// Call the realtime get method.
+	resp, err := c.realtimeService.Get(gaPrefix+viewID, metric).Do()
+	if err != nil {
+		return "", err
+	}
+
+	return resp.TotalsForAllResults[metric], nil
+}
+
 // PrintResponse parses and prints the Analytics Reporting API V4 response
 // in the form of a tabwriter table.
 // It will only print X maxRows if passed. If 0 is passed for maxRows
@@ -131,13 +154,13 @@ func PrintResponse(resp *ga.GetReportsResponse, maxRows int) error {
 		// Clean the dimensions headers.
 		dimensionsHeaders := []string{}
 		for a := 0; a < len(report.ColumnHeader.Dimensions); a++ {
-			dimensionsHeaders = append(dimensionsHeaders, strings.TrimPrefix(report.ColumnHeader.Dimensions[a], "ga:"))
+			dimensionsHeaders = append(dimensionsHeaders, strings.TrimPrefix(report.ColumnHeader.Dimensions[a], gaPrefix))
 		}
 
 		// Clean the metric headers.
 		metricHeaders := []string{}
 		for i := 0; i < len(report.ColumnHeader.MetricHeader.MetricHeaderEntries); i++ {
-			metricHeaders = append(metricHeaders, strings.TrimPrefix(report.ColumnHeader.MetricHeader.MetricHeaderEntries[i].Name, "ga:"))
+			metricHeaders = append(metricHeaders, strings.TrimPrefix(report.ColumnHeader.MetricHeader.MetricHeaderEntries[i].Name, gaPrefix))
 		}
 
 		// Create the tabwriter.
@@ -186,4 +209,83 @@ func PrintResponse(resp *ga.GetReportsResponse, maxRows int) error {
 	}
 
 	return nil
+}
+
+// getAccounts queries the Analytics Managemnt API V3 using the
+// Analytics Management API V3 service object.
+// It returns an array of analytics accounts.
+func (c *Client) getAccounts() ([]*gav3.Account, error) {
+	resp, err := gav3.NewManagementAccountsService(c.servicev3).List().Do()
+	if err != nil {
+		return nil, fmt.Errorf("listing accounts failed: %v", err)
+	}
+
+	return resp.Items, nil
+}
+
+// getProperties queries the Analytics Managemnt API V3 using the
+// Analytics Management API V3 service object.
+// It returns an array of analytics properties for an account ID.
+func (c *Client) getProperties(accountID string) ([]*gav3.Webproperty, error) {
+	resp, err := gav3.NewManagementWebpropertiesService(c.servicev3).List(accountID).Do()
+	if err != nil {
+		return nil, fmt.Errorf("listing properties failed: %v", err)
+	}
+
+	return resp.Items, nil
+}
+
+// getProfiles queries the Analytics Managemnt API V3 using the
+// Analytics Management API V3 service object.
+// It returns an array of analytics profiles for an account and property ID.
+func (c *Client) getProfiles(accountID, propertyID string) ([]*gav3.Profile, error) {
+	resp, err := gav3.NewManagementProfilesService(c.servicev3).List(accountID, propertyID).Do()
+	if err != nil {
+		return nil, fmt.Errorf("listing profiles failed: %v", err)
+	}
+
+	return resp.Items, nil
+}
+
+// GetProfileName returns the name of a Google Analytics profile.
+func (c *Client) GetProfileName(profileID string) (name string, err error) {
+	// Get the accounts.
+	accounts, err := c.getAccounts()
+	if err != nil {
+		return "", err
+	}
+
+	// For each account get the properties.
+	for _, account := range accounts {
+		properties, err := c.getProperties(account.Id)
+		if err != nil {
+			return "", err
+		}
+
+		// Iterate over the properties
+		for _, property := range properties {
+			// Check early if the default profile is our profileID.
+			// Then we won't have to do a call to getProfiles.
+			if strconv.Itoa(int(property.DefaultProfileId)) == profileID {
+				name = property.Name
+				break
+			}
+
+			// Otherwise get the profiles for the property to find a match.
+			profiles, err := c.getProfiles(account.Id, property.Id)
+			if err != nil {
+				return "", err
+			}
+
+			// Iterate over the profiles.
+			for _, profile := range profiles {
+				if profile.Id == profileID {
+					name = profile.Name
+					break
+				}
+			}
+		}
+	}
+
+	return name, err
 }
