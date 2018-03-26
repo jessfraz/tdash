@@ -74,6 +74,11 @@ func doJenkinsCI() (*termui.Table, error) {
 		}
 	}
 
+	if len(rows) <= 1 {
+		// return early if we have no data
+		return nil, nil
+	}
+
 	// Set the rows.
 	table.Rows = rows
 
@@ -95,4 +100,23 @@ func doJenkinsCI() (*termui.Table, error) {
 	}
 
 	return table, nil
+}
+
+func jenkinsWidget(body *termui.Grid) {
+	if body == nil {
+		body = termui.Body
+	}
+
+	janky, err := doJenkinsCI()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	if janky != nil {
+		body.AddRows(termui.NewCol(3, 0, janky))
+
+		// Calculate the layout.
+		body.Align()
+		// Render the termui body.
+		termui.Render(body)
+	}
 }

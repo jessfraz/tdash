@@ -89,6 +89,11 @@ func doTravisCI() ([]*termui.Table, error) {
 			}
 		}
 
+		if len(rows) <= 1 {
+			// return early if we have no data
+			continue
+		}
+
 		// Set the rows.
 		table.Rows = rows
 
@@ -114,4 +119,27 @@ func doTravisCI() ([]*termui.Table, error) {
 	}
 
 	return tables, nil
+}
+
+func travisWidget(body *termui.Grid) {
+	if body == nil {
+		body = termui.Body
+	}
+
+	travis, err := doTravisCI()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	if travis != nil {
+		columns := []*termui.Row{}
+		for _, t := range travis {
+			columns = append(columns, termui.NewCol(int(12/len(travis)), 0, t))
+		}
+		body.AddRows(termui.NewRow(columns...))
+
+		// Calculate the layout.
+		body.Align()
+		// Render the termui body.
+		termui.Render(body)
+	}
 }

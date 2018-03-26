@@ -53,6 +53,8 @@ $ tdash -h
         Path to Google Analytics keyfile (default "/home/jessie/.tdash/ga.json")
   -ga-viewid value
         Google Analytics view IDs (can have more than one)
+  -interval string
+        update interval (ex. 5ms, 10s, 1m, 3h) (default "2m")
   -jenkins-password string
         Jenkins password for authentication (or env var JENKINS_PASSWORD)
   -jenkins-uri string

@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/user"
 	"path/filepath"
+	"time"
 
 	"github.com/gizak/termui"
 	"github.com/jessfraz/tdash/version"
@@ -41,6 +42,7 @@ var (
 	jenkinsPassword string
 
 	showAllBuilds bool
+	interval      string
 
 	dashDir string
 
@@ -70,6 +72,7 @@ func init() {
 
 	// Parse flags.
 	flag.BoolVar(&showAllBuilds, "all", false, "Show all builds even successful ones, defaults to only showing failures")
+	flag.StringVar(&interval, "interval", "2m", "update interval (ex. 5ms, 10s, 1m, 3h)")
 
 	flag.StringVar(&googleAnalyticsKeyfile, "ga-keyfile", filepath.Join(dashDir, "ga.json"), "Path to Google Analytics keyfile")
 	flag.Var(&googleAnalyticsViewIDs, "ga-viewid", "Google Analytics view IDs (can have more than one)")
@@ -104,6 +107,15 @@ func init() {
 }
 
 func main() {
+	var ticker *time.Ticker
+
+	// parse the duration
+	dur, err := time.ParseDuration(interval)
+	if err != nil {
+		logrus.Fatalf("parsing %s as duration failed: %v", interval, err)
+	}
+	ticker = time.NewTicker(dur)
+
 	// Initialize termui.
 	if err := termui.Init(); err != nil {
 		logrus.Fatalf("initializing termui failed: %v", err)
@@ -111,69 +123,9 @@ func main() {
 	defer termui.Close()
 
 	// Create termui widgets for google analytics.
-	go func() {
-		ga, err := doGoogleAnalytics()
-		if err != nil {
-			logrus.Fatal(err)
-		}
-
-		// Add Google Analytics data to the termui body.
-		for _, data := range ga {
-			data.table.Block.BorderLabel = "Google Analytics data for " + data.name
-
-			activeUsers := termui.NewPar(data.activeUsers)
-			activeUsers.TextFgColor = termui.ColorWhite
-			activeUsers.BorderFg = termui.ColorWhite
-			activeUsers.BorderLabel = "active users for " + data.name
-			activeUsers.Height = 3
-			activeUsers.Width = 50
-
-			if data.table != nil {
-				termui.Body.AddRows(
-					termui.NewRow(termui.NewCol(9, 0, data.table), termui.NewCol(3, 0, activeUsers)),
-				)
-			}
-		}
-		// Calculate the layout.
-		termui.Body.Align()
-		// Render the termui body.
-		termui.Render(termui.Body)
-	}()
-
-	// Create termui widgets for travis.
-	go func() {
-		travis, err := doTravisCI()
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		if travis != nil {
-			columns := []*termui.Row{}
-			for _, t := range travis {
-				columns = append(columns, termui.NewCol(int(12/len(travis)), 0, t))
-			}
-			termui.Body.AddRows(termui.NewRow(columns...))
-
-			// Calculate the layout.
-			termui.Body.Align()
-			// Render the termui body.
-			termui.Render(termui.Body)
-		}
-	}()
-
-	go func() {
-		janky, err := doJenkinsCI()
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		if janky != nil {
-			termui.Body.AddRows(termui.NewCol(3, 0, janky))
-
-			// Calculate the layout.
-			termui.Body.Align()
-			// Render the termui body.
-			termui.Render(termui.Body)
-		}
-	}()
+	go gaWidget(nil)
+	go travisWidget(nil)
+	go jenkinsWidget(nil)
 
 	// Calculate the layout.
 	termui.Body.Align()
@@ -183,11 +135,13 @@ func main() {
 	// Handle key q pressing
 	termui.Handle("/sys/kbd/q", func(termui.Event) {
 		// press q to quit
+		ticker.Stop()
 		termui.StopLoop()
 	})
 
 	termui.Handle("/sys/kbd/C-c", func(termui.Event) {
 		// handle Ctrl + c combination
+		ticker.Stop()
 		termui.StopLoop()
 	})
 
@@ -198,6 +152,26 @@ func main() {
 		termui.Clear()
 		termui.Render(termui.Body)
 	})
+
+	// Update on an interval
+	go func() {
+		for range ticker.C {
+			body := termui.NewGrid()
+			body.X = 0
+			body.Y = 0
+			body.BgColor = termui.ThemeAttr("bg")
+			body.Width = termui.TermWidth()
+
+			gaWidget(body)
+			travisWidget(body)
+			jenkinsWidget(body)
+
+			// Calculate the layout.
+			body.Align()
+			// Render the termui body.
+			termui.Render(body)
+		}
+	}()
 
 	// Start the loop.
 	termui.Loop()

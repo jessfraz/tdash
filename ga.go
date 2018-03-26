@@ -72,3 +72,36 @@ func doGoogleAnalytics() ([]gaData, error) {
 
 	return data, nil
 }
+
+func gaWidget(body *termui.Grid) {
+	if body == nil {
+		body = termui.Body
+	}
+
+	ga, err := doGoogleAnalytics()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	// Add Google Analytics data to the termui body.
+	for _, data := range ga {
+		data.table.Block.BorderLabel = "Google Analytics data for " + data.name
+
+		activeUsers := termui.NewPar(data.activeUsers)
+		activeUsers.TextFgColor = termui.ColorWhite
+		activeUsers.BorderFg = termui.ColorWhite
+		activeUsers.BorderLabel = "active users for " + data.name
+		activeUsers.Height = 3
+		activeUsers.Width = 50
+
+		if data.table != nil {
+			body.AddRows(
+				termui.NewRow(termui.NewCol(9, 0, data.table), termui.NewCol(3, 0, activeUsers)),
+			)
+		}
+	}
+	// Calculate the layout.
+	body.Align()
+	// Render the termui body.
+	termui.Render(body)
+}
