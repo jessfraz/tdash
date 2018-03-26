@@ -10,6 +10,7 @@ import (
 	"strings"
 	"text/tabwriter"
 
+	"github.com/gizak/termui"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"golang.org/x/oauth2/jwt"
@@ -288,4 +289,94 @@ func (c *Client) GetProfileName(profileID string) (name string, err error) {
 	}
 
 	return name, err
+}
+
+// CreateWidget parses the Analytics Reporting API V4 response
+// and returns a termui tablee.
+// It will only add X maxRows if passed. If 0 is passed for maxRows
+// it will add all the rows.
+func CreateWidget(resp *ga.GetReportsResponse, maxRows int) (*termui.Table, error) {
+	// Initialize the table.
+	table := termui.NewTable()
+	rows := [][]string{}
+
+	// Iterate over the reports.
+	for _, report := range resp.Reports {
+		if report.Data.Rows == nil {
+			return nil, fmt.Errorf("no data found for given view")
+		}
+
+		// Set the maxium rows to print. If it is 0, ie. the user did not pass one,
+		// the set it to the length og the rows.
+		if maxRows == 0 {
+			maxRows = len(report.Data.Rows)
+		}
+
+		// Clean the dimensions headers.
+		dimensionsHeaders := []string{}
+		for a := 0; a < len(report.ColumnHeader.Dimensions); a++ {
+			dimensionsHeaders = append(dimensionsHeaders, strings.TrimPrefix(report.ColumnHeader.Dimensions[a], gaPrefix))
+		}
+
+		// Clean the metric headers.
+		metricHeaders := []string{}
+		for i := 0; i < len(report.ColumnHeader.MetricHeader.MetricHeaderEntries); i++ {
+			metricHeaders = append(metricHeaders, strings.TrimPrefix(report.ColumnHeader.MetricHeader.MetricHeaderEntries[i].Name, gaPrefix))
+		}
+
+		// Initialize the rows.
+		rows = [][]string{
+			append(dimensionsHeaders, metricHeaders...),
+		}
+
+		for l := 0; l < maxRows && l < len(report.Data.Rows); l++ {
+			// Clean the metric values.
+			values := []string{}
+			for _, m := range report.Data.Rows[l].Metrics {
+				for j := 0; j < len(m.Values); j++ {
+					values = append(values, m.Values[j])
+				}
+			}
+
+			// Append the dimensions and metrics.
+			rows = append(rows, append(report.Data.Rows[l].Dimensions, values...))
+		}
+
+		// Print the totals _only_ if we had dimensions.
+		if len(report.ColumnHeader.Dimensions) > 0 {
+			// Clean the dimensions headers for the totals row.
+			headers := []string{}
+			for h := 0; h < len(report.ColumnHeader.Dimensions); h++ {
+				if h == 0 {
+					headers = append(headers, "TOTAL")
+					continue
+				}
+				headers = append(headers, "-")
+			}
+
+			// Clean the totals values.
+			totals := []string{}
+			for _, t := range report.Data.Totals {
+				for k := 0; k < len(t.Values); k++ {
+					totals = append(totals, t.Values[k])
+				}
+			}
+
+			// Append the totals.
+			rows = append(rows, append(headers, totals...))
+		}
+	}
+
+	// Set the rows.
+	table.Rows = rows
+
+	// Set the default colors and settings.
+	table.FgColor = termui.ColorWhite
+	table.BgColor = termui.ColorDefault
+	table.TextAlign = termui.AlignLeft
+	table.Analysis()
+	table.SetSize()
+	table.Border = true
+
+	return table, nil
 }

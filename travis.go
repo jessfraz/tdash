@@ -4,37 +4,38 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"os"
-	"text/tabwriter"
 
 	travis "github.com/Ableton/go-travis"
+	"github.com/gizak/termui"
 	"github.com/google/go-github/github"
 	"github.com/sirupsen/logrus"
 )
 
-func doTravisCI() {
+func doTravisCI() ([]*termui.Table, error) {
 	// Check that the Travis CI API token is not empty.
 	if len(travisToken) <= 0 {
 		logrus.Warn("Travis CI API token cannot be empty")
 		logrus.Info("skipping Travis CI data")
-		return
+		return nil, nil
 	}
 
 	// Check that the Travis owners is not empty.
 	if len(travisOwners) <= 0 {
 		logrus.Warn("Travis CI owners cannot be empty")
 		logrus.Info("skipping Travis CI data")
-		return
+		return nil, nil
 	}
 
-	// Create the tabwriter.
-	w := tabwriter.NewWriter(os.Stdout, 20, 1, 3, ' ', 0)
-
-	// Print dimensions and metrics header.
-	fmt.Fprintln(w, "REPO\tBRANCH\tSTATE\tFINISHED AT")
+	tables := []*termui.Table{}
 
 	// Iterate over the travisOwners if it was passed.
 	for _, travisOwner := range travisOwners {
+		// Initialize the table.
+		table := termui.NewTable()
+		rows := [][]string{
+			[]string{"repo", "branch", "state", "finished at"},
+		}
+
 		// Get the owners repos from GitHub.
 		ghClient := github.NewClient(nil)
 		opt := &github.RepositoryListOptions{
@@ -45,7 +46,7 @@ func doTravisCI() {
 		for {
 			reposResp, resp, err := ghClient.Repositories.List(context.Background(), travisOwner, opt)
 			if err != nil {
-				logrus.Fatalf("listing repos for %q failed: %v", travisOwner, err)
+				return nil, fmt.Errorf("listing repos for %q failed: %v", travisOwner, err)
 			}
 			repos = append(repos, reposResp...)
 			if resp.NextPage == 0 {
@@ -72,15 +73,26 @@ func doTravisCI() {
 				if resp.StatusCode == http.StatusNotFound {
 					continue
 				}
-				logrus.Fatalf("getting master branch for travis repo %q failed: %v", repo.GetFullName(), err)
+				return nil, fmt.Errorf("getting master branch for travis repo %q failed: %v", repo.GetFullName(), err)
 			}
 
-			if showAllBuilds || branch.State != "passed" {
-				fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", repo.GetFullName(), "master", branch.State, branch.FinishedAt)
-			}
+			rows = append(rows, []string{repo.GetFullName(), "master", branch.State, branch.FinishedAt})
 		}
+
+		// Set the rows.
+		table.Rows = rows
+
+		// Set the default colors and settings.
+		table.FgColor = termui.ColorWhite
+		table.BgColor = termui.ColorDefault
+		table.TextAlign = termui.AlignLeft
+		table.Analysis()
+		table.SetSize()
+		table.Border = true
+		table.Block.BorderLabel = "Travis CI builds for " + travisOwner
+
+		tables = append(tables, table)
 	}
 
-	w.Flush()
-	fmt.Println()
+	return tables, nil
 }
