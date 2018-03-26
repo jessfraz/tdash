@@ -46,7 +46,7 @@ func doJenkinsCI() (*termui.Table, error) {
 	// Initialize the table.
 	table := termui.NewTable()
 	rows := [][]string{
-		[]string{"job", "state", "finished at"},
+		{"job", "state", "finished at"},
 	}
 
 	// Iterate over the jobs.

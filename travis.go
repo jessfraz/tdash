@@ -33,7 +33,7 @@ func doTravisCI() ([]*termui.Table, error) {
 		// Initialize the table.
 		table := termui.NewTable()
 		rows := [][]string{
-			[]string{"repo", "branch", "state", "finished at"},
+			{"repo", "branch", "state", "finished at"},
 		}
 
 		// Get the owners repos from GitHub.
