@@ -89,3 +89,8 @@ $ dash -h
     Use this email address to 
     [add a user](https://support.google.com/analytics/answer/1009702) to the 
     Google Analytics view you want to access via the API. 
+
+### Travis
+
+1. Get your Travis token: Go to the "Profile" tab on your 
+	[Accounts page](https://travis-ci.org/profile)
