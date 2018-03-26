@@ -2,7 +2,7 @@
 PREFIX?=$(shell pwd)
 
 # Setup name variables for the package/tool
-NAME := dash
+NAME := tdash
 PKG := github.com/jessfraz/$(NAME)
 
 # Set any default go build tags
@@ -29,7 +29,7 @@ GOOSARCHES = darwin/amd64 darwin/386 freebsd/amd64 freebsd/386 linux/arm linux/a
 .PHONY: build
 build: $(NAME) ## Builds a dynamic executable or package
 
-$(NAME): *.go **/*.go VERSION.txt
+$(NAME): *.go VERSION.txt
 	@echo "+ $@"
 	go build -tags "$(BUILDTAGS)" ${GO_LDFLAGS} -o $(NAME) .
 

@@ -7,7 +7,7 @@ ENV GOPATH /go
 RUN	apk add --no-cache \
 	ca-certificates
 
-COPY . /go/src/github.com/jessfraz/dash
+COPY . /go/src/github.com/jessfraz/tdash
 
 RUN set -x \
 	&& apk add --no-cache --virtual .build-deps \
@@ -16,17 +16,17 @@ RUN set -x \
 		libc-dev \
 		libgcc \
 		make \
-	&& cd /go/src/github.com/jessfraz/dash \
+	&& cd /go/src/github.com/jessfraz/tdash \
 	&& make static \
-	&& mv dash /usr/bin/dash \
+	&& mv tdash /usr/bin/tdash \
 	&& apk del .build-deps \
 	&& rm -rf /go \
 	&& echo "Build complete."
 
 FROM scratch
 
-COPY --from=builder /usr/bin/dash /usr/bin/dash
+COPY --from=builder /usr/bin/tdash /usr/bin/tdash
 COPY --from=builder /etc/ssl/certs/ /etc/ssl/certs
 
-ENTRYPOINT [ "dash" ]
+ENTRYPOINT [ "tdash" ]
 CMD [ "--help" ]
