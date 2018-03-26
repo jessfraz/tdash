@@ -39,6 +39,8 @@ var (
 	jenkinsUsername string
 	jenkinsPassword string
 
+	showAllBuilds bool
+
 	dashDir string
 
 	debug bool
@@ -66,6 +68,8 @@ func init() {
 	dashDir = filepath.Join(home, ".dash")
 
 	// Parse flags.
+	flag.BoolVar(&showAllBuilds, "all", false, "Show all builds even successful ones, defaults to only showing failures")
+
 	flag.StringVar(&googleAnalyticsKeyfile, "ga-keyfile", filepath.Join(dashDir, "ga.json"), "Path to Google Analytics keyfile")
 	flag.Var(&googleAnalyticsViewIDs, "ga-viewid", "Google Analytics view IDs (can have more than one)")
 

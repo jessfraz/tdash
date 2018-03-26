@@ -65,7 +65,7 @@ func New(keyfile string, debug bool) (*Client, error) {
 		)
 		client.client = client.config.Client(ctx)
 	} else {
-		client.client = client.config.Client(oauth2.NoContext)
+		client.client = client.config.Client(context.Background())
 	}
 
 	// Construct the analytics reporting v4 service object.

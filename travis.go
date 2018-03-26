@@ -52,7 +52,9 @@ func doTravisCI() {
 				continue
 			}
 
-			fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", repo.Slug, "master", branch.State, branch.FinishedAt)
+			if showAllBuilds || branch.State != "passed" {
+				fmt.Fprintf(w, "%s\t%s\t%s\t%s\n", repo.Slug, "master", branch.State, branch.FinishedAt)
+			}
 		}
 	}
 

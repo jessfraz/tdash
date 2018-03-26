@@ -45,11 +45,19 @@ $ dash -h
  Version: v0.0.0
  Build: 338723b
 
+  -all
+        Show all builds even successful ones, defaults to only showing failures
   -d    run in debug mode
   -ga-keyfile string
         Path to Google Analytics keyfile (default "/home/jessie/.dash/ga.json")
   -ga-viewid value
         Google Analytics view IDs (can have more than one)
+  -jenkins-password string
+        Jenkins password for authentication (or env var JENKINS_PASSWORD)
+  -jenkins-uri string
+        Jenkins base URI (or env var JENKINS_BASE_URI)
+  -jenkins-username string
+        Jenkins username for authentication (or env var JENKINS_USERNAME)
   -travis-owner value
         Travis owner name for builds (can have more than one)
   -travis-token string
