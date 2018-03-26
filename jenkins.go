@@ -48,7 +48,8 @@ func doJenkinsCI() (*termui.Table, error) {
 	rows := [][]string{
 		{"job", "state", "finished at"},
 	}
-	badrows := []int{}
+	redrows := []int{}
+	otherrows := []int{}
 
 	// Iterate over the jobs.
 	for _, job := range jobs {
@@ -65,7 +66,11 @@ func doJenkinsCI() (*termui.Table, error) {
 
 		if showAllBuilds || build.Raw.Result != "SUCCESS" {
 			rows = append(rows, []string{job.Raw.DisplayName, build.Raw.Result, time.Unix(0, int64(time.Millisecond)*build.Raw.Timestamp).Format(time.RFC3339)})
-			badrows = append(badrows, len(rows)-1)
+			if build.Raw.Result == "FAILURE" {
+				redrows = append(redrows, len(rows)-1)
+			} else {
+				otherrows = append(otherrows, len(rows)-1)
+			}
 		}
 	}
 
@@ -80,9 +85,13 @@ func doJenkinsCI() (*termui.Table, error) {
 	table.Block.BorderLabel = "Jenkins builds for " + jenkinsBaseURI
 	table.Analysis()
 	table.SetSize()
-	// Set the color to red for the bad rows
-	for _, br := range badrows {
+	// Set the color to red for the red rows
+	for _, br := range redrows {
 		table.FgColors[br] = termui.ColorRed
+	}
+	// Set the color to yellow for the other rows
+	for _, br := range otherrows {
+		table.FgColors[br] = termui.ColorYellow
 	}
 
 	return table, nil
