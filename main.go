@@ -7,7 +7,6 @@ import (
 	"os/user"
 	"path/filepath"
 
-	"github.com/jessfraz/dash/googleanalytics"
 	"github.com/jessfraz/dash/version"
 	"github.com/sirupsen/logrus"
 )
@@ -32,6 +31,9 @@ const (
 var (
 	googleAnalyticsKeyfile string
 	googleAnalyticsViewIDs stringSlice
+
+	travisToken  string
+	travisOwners stringSlice
 
 	dashDir string
 
@@ -63,6 +65,9 @@ func init() {
 	flag.StringVar(&googleAnalyticsKeyfile, "ga-keyfile", filepath.Join(dashDir, "ga.json"), "Path to Google Analytics keyfile")
 	flag.Var(&googleAnalyticsViewIDs, "ga-viewid", "Google Analytics view IDs (can have more than one)")
 
+	flag.StringVar(&travisToken, "travis-token", os.Getenv("TRAVISCI_API_TOKEN"), "Travis CI API token (or env var TRAVISCI_API_TOKEN)")
+	flag.Var(&travisOwners, "travis-owner", "Travis owner name for builds (can have more than one)")
+
 	flag.BoolVar(&vrsn, "version", false, "print version and exit")
 	flag.BoolVar(&vrsn, "v", false, "print version and exit (shorthand)")
 	flag.BoolVar(&debug, "d", false, "run in debug mode")
@@ -86,53 +91,8 @@ func init() {
 }
 
 func main() {
-	if _, err := os.Stat(googleAnalyticsKeyfile); os.IsNotExist(err) {
-		// TODO(jessfraz): make this just not get google analytics data
-		// if we don't have a file and just warn the user.
-		logrus.Fatal("Google Analytics keyfile %q does not exist", googleAnalyticsKeyfile)
-	}
-
-	// Check that the Google Analytics view ID is not empty.
-	if len(googleAnalyticsViewIDs) <= 0 {
-		logrus.Fatal("Google Analytics view ID cannot be empty")
-	}
-
-	// Create the Google Analytics Client
-	gaClient, err := googleanalytics.New(googleAnalyticsKeyfile, debug)
-	if err != nil {
-		logrus.Fatalf("creating Google Analytics client failed: %v", err)
-	}
-
-	// Iterate over the Google Analytics view IDs.
-	for _, gaViewID := range googleAnalyticsViewIDs {
-		// Get the name of our Google Analytics view ID.
-		gaViewName, err := gaClient.GetProfileName(gaViewID)
-		if err != nil {
-			logrus.Fatalf("getting Google Analytics view name for %q failed: %v", gaViewID, err)
-		}
-
-		fmt.Printf("Google Analytics data for view %s\n\n", gaViewName)
-
-		// Get the Google Analytics report.
-		resp, err := gaClient.GetReport(gaViewID)
-		if err != nil {
-			logrus.Fatalf("getting Google Analytics report for view %q failed: %v", gaViewID, err)
-		}
-
-		// Print the Google Analytics report.
-		// TODO(jessfraz): make setting the max rows a flag.
-		if err := googleanalytics.PrintResponse(resp, 20); err != nil {
-			logrus.Fatalf("printing Google Analytics response failed: %v", err)
-		}
-
-		// Get the realtime data for users.
-		activeUsers, err := gaClient.GetRealtimeActiveUsers(gaViewID)
-		if err != nil {
-			logrus.Fatalf("getting Google Analytics realtime active users data for view %q failed: %v", gaViewID, err)
-		}
-
-		fmt.Printf("\nRealtime Active Users: %s\n", activeUsers)
-	}
+	doGoogleAnalytics()
+	doTravisCI()
 }
 
 func getHome() (string, error) {

@@ -8,9 +8,33 @@
   version = "v0.20.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/Ableton/go-travis"
+  packages = ["."]
+  revision = "f849ce748f418a10bbf7cd1327da041e4adde86e"
+
+[[projects]]
+  name = "github.com/fatih/structs"
+  packages = ["."]
+  revision = "a720dfa8df582c51dee1b36feabb906bde1588bd"
+  version = "v1.0"
+
+[[projects]]
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   revision = "925541529c1fa6821df4e44ce2723319eb2be768"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/google/go-querystring"
+  packages = ["query"]
+  revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
+
+[[projects]]
+  name = "github.com/oleiade/reflections"
+  packages = ["."]
+  revision = "2b6ec3da648e3e834dc41bad8d9ed7f2dc6a9496"
   version = "v1.0.0"
 
 [[projects]]
@@ -53,7 +77,7 @@
     "unix",
     "windows"
   ]
-  revision = "91ee8cde435411ca3f1cd365e8f20131aed4d0a1"
+  revision = "13d03a9a82fba647c21a0ef8fba44a795d0f0835"
 
 [[projects]]
   branch = "master"
@@ -87,6 +111,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "746d4f854a80479c4b061a88057d37155c611d3189f77c7b8cfa40764ee67769"
+  inputs-digest = "7f0525b0f685d07967be27f0841c945c62a47d83dae9853d6b384fae0ca9e321"
   solver-name = "gps-cdcl"
   solver-version = 1
