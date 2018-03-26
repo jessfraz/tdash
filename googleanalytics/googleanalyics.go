@@ -84,10 +84,15 @@ func (c *Client) GetReport(viewID string) (*ga.GetReportsResponse, error) {
 				Metrics: []*ga.Metric{
 					{Expression: "ga:sessions"},
 					{Expression: "ga:pageviews"},
+					{Expression: "ga:uniquePageviews"},
 					{Expression: "ga:users"},
 				},
 				Dimensions: []*ga.Dimension{
-					{Name: "ga:country"},
+					{Name: "ga:pagePath"},
+				},
+				OrderBys: []*ga.OrderBy{
+					{FieldName: "ga:sessions", SortOrder: "DESCENDING"},
+					{FieldName: "ga:pageviews", SortOrder: "DESCENDING"},
 				},
 			},
 		},
@@ -97,12 +102,21 @@ func (c *Client) GetReport(viewID string) (*ga.GetReportsResponse, error) {
 	return c.service.Reports.BatchGet(req).Do()
 }
 
-// PrintResponse parses and prints the Analytics Reporting API V4 response.
-func PrintResponse(resp *ga.GetReportsResponse) error {
+// PrintResponse parses and prints the Analytics Reporting API V4 response
+// in the form of a tabwriter table.
+// It will only print X maxRows if passed. If 0 is passed for maxRows
+// it will print all the rows.
+func PrintResponse(resp *ga.GetReportsResponse, maxRows int) error {
 	// Iterate over the reports.
 	for _, report := range resp.Reports {
 		if report.Data.Rows == nil {
 			return fmt.Errorf("no data found for given view")
+		}
+
+		// Set the maxium rows to print. If it is 0, ie. the user did not pass one,
+		// the set it to the length og the rows.
+		if maxRows == 0 {
+			maxRows = len(report.Data.Rows)
 		}
 
 		// Clean the metric headers.
@@ -117,17 +131,40 @@ func PrintResponse(resp *ga.GetReportsResponse) error {
 		// Print dimensions and metrics header.
 		fmt.Fprintf(w, "%s\n", strings.ToUpper(strings.Join(append(report.ColumnHeader.Dimensions, metricHeaders...), "\t")))
 
-		for _, row := range report.Data.Rows {
+		for l := 0; l < maxRows; l++ {
 			// Clean the metric values.
 			values := []string{}
-			for _, m := range row.Metrics {
+			for _, m := range report.Data.Rows[l].Metrics {
 				for j := 0; j < len(m.Values); j++ {
 					values = append(values, m.Values[j])
 				}
 			}
 
 			// Print the dimensions and metrics.
-			fmt.Fprintf(w, "%s\n", strings.Join(append(row.Dimensions, values...), "\t"))
+			fmt.Fprintf(w, "%s\n", strings.Join(append(report.Data.Rows[l].Dimensions, values...), "\t"))
+		}
+
+		// Print the totals _only_ if we had dimensions.
+		if len(report.ColumnHeader.Dimensions) > 0 {
+			// Clean the dimensions headers for the totals row.
+			headers := []string{}
+			for h := 0; h < len(report.ColumnHeader.Dimensions); h++ {
+				if h == 0 {
+					headers = append(headers, "TOTAL")
+					continue
+				}
+				headers = append(headers, "-")
+			}
+
+			// Clean the totals values.
+			totals := []string{}
+			for _, t := range report.Data.Totals {
+				for k := 0; k < len(t.Values); k++ {
+					totals = append(totals, t.Values[k])
+				}
+			}
+
+			fmt.Fprintf(w, "%s\n", strings.Join(append(headers, totals...), "\t"))
 		}
 
 		w.Flush()

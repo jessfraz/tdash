@@ -98,7 +98,8 @@ func main() {
 	}
 
 	// Print the Google Analytics report.
-	if err := googleanalytics.PrintResponse(resp); err != nil {
+	// TODO(jessfraz): make setting the max rows a flag.
+	if err := googleanalytics.PrintResponse(resp, 20); err != nil {
 		logrus.Fatalf("printing Google Analytics response failed: %v", err)
 	}
 }
