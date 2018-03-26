@@ -19,17 +19,20 @@ A single page dashboard with stats from Google Analytics, GitHub, Travis CI, and
 ### Google Analytics
 
 1. Enable the API: To get started using Analytics Reporting API v4, you need to 
-first create a project in the 
-[Google API Console](https://console.developers.google.com),
-enable the API, and create credentials.
+    first create a project in the 
+    [Google API Console](https://console.developers.google.com),
+    enable the API, and create credentials.
 
-Follow the instructions [for step enabling the API here](https://developers.google.com/analytics/devguides/reporting/core/v4/quickstart/service-java).
+    Follow the instructions [for step enabling the API here](https://developers.google.com/ana
+    ytics/devguides/reporting/core/v4/quickstart/service-java).
 
-2. Add the new service account to the Google Analytics account with [Read & Analyze](https://support.google.com/analytics/answer/2884495) permission.
+2. Add the new service account to the Google Analytics account with 
+    [Read & Analyze](https://support.google.com/analytics/answer/2884495) 
+    permission.
 
-The newly created service account will have an email address that looks
-similar to: `quickstart@PROJECT-ID.iam.gserviceaccount.com`.
+    The newly created service account will have an email address that looks
+    similar to: `quickstart@PROJECT-ID.iam.gserviceaccount.com`.
 
-Use this email address to 
-[add a user](https://support.google.com/analytics/answer/1009702) to the 
-Google Analytics view you want to access via the API. 
+    Use this email address to 
+    [add a user](https://support.google.com/analytics/answer/1009702) to the 
+    Google Analytics view you want to access via the API. 
