@@ -4,6 +4,8 @@
 
 A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Jenkins. Very much built specific to me.
 
+![term.png](term.png)
+
 ## Installation
 
 #### Binaries
