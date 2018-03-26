@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
+	"strings"
+	"text/tabwriter"
 
-	"github.com/sirupsen/logrus"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"golang.org/x/oauth2/jwt"
@@ -85,7 +87,7 @@ func (c *Client) GetReport(viewID string) (*ga.GetReportsResponse, error) {
 					{Expression: "ga:users"},
 				},
 				Dimensions: []*ga.Dimension{
-					//{Name: "ga:country"},
+					{Name: "ga:country"},
 				},
 			},
 		},
@@ -99,32 +101,36 @@ func (c *Client) GetReport(viewID string) (*ga.GetReportsResponse, error) {
 func PrintResponse(resp *ga.GetReportsResponse) error {
 	// Iterate over the reports.
 	for _, report := range resp.Reports {
-		header := report.ColumnHeader
-		dimHdrs := header.Dimensions
-		metricHdrs := header.MetricHeader.MetricHeaderEntries
-		rows := report.Data.Rows
-
-		if rows == nil {
+		if report.Data.Rows == nil {
 			return fmt.Errorf("no data found for given view")
 		}
 
-		for _, row := range rows {
-			dims := row.Dimensions
-			metrics := row.Metrics
+		// Clean the metric headers.
+		metricHeaders := []string{}
+		for _, mh := range report.ColumnHeader.MetricHeader.MetricHeaderEntries {
+			metricHeaders = append(metricHeaders, mh.Name)
+		}
 
-			for i := 0; i < len(dimHdrs) && i < len(dims); i++ {
-				logrus.Infof("%s: %s", dimHdrs[i], dims[i])
-			}
+		// Create the tabwriter.
+		w := tabwriter.NewWriter(os.Stdout, 20, 1, 3, ' ', 0)
 
-			for _, metric := range metrics {
-				// We have only 1 date range in the example
-				// So it'll always print "Date Range (0)"
-				// log.Infof("Date Range (%d)", idx)
-				for j := 0; j < len(metricHdrs) && j < len(metric.Values); j++ {
-					logrus.Infof("%s: %s", metricHdrs[j].Name, metric.Values[j])
+		// Print dimensions and metrics header.
+		fmt.Fprintf(w, "%s\n", strings.ToUpper(strings.Join(append(report.ColumnHeader.Dimensions, metricHeaders...), "\t")))
+
+		for _, row := range report.Data.Rows {
+			// Clean the metric values.
+			values := []string{}
+			for _, m := range row.Metrics {
+				for _, v := range m.Values {
+					values = append(values, v)
 				}
 			}
+
+			// Print the dimensions and metrics.
+			fmt.Fprintf(w, "%s\n", strings.Join(append(row.Dimensions, values...), "\t"))
 		}
+
+		w.Flush()
 	}
 
 	return nil
