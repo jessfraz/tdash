@@ -26,3 +26,11 @@
 [[override]]
   name = "github.com/Sirupsen/logrus"
   source = "github.com/sirupsen/logrus"
+
+[[constraint]]
+  name = "google.golang.org/api"
+  branch = "master"
+
+[[constraint]]
+  name = "golang.org/x/oauth2"
+  branch = "master"
