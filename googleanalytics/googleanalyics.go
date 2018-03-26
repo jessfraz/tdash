@@ -169,7 +169,7 @@ func PrintResponse(resp *ga.GetReportsResponse, maxRows int) error {
 		// Print dimensions and metrics header.
 		fmt.Fprintf(w, "%s\n", strings.ToUpper(strings.Join(append(dimensionsHeaders, metricHeaders...), "\t")))
 
-		for l := 0; l < maxRows; l++ {
+		for l := 0; l < maxRows && l < len(report.Data.Rows); l++ {
 			// Clean the metric values.
 			values := []string{}
 			for _, m := range report.Data.Rows[l].Metrics {
