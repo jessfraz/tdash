@@ -149,7 +149,7 @@ func main() {
 		if travis != nil {
 			columns := []*termui.Row{}
 			for _, t := range travis {
-				columns = append(columns, termui.NewCol(12/len(travis), 0, t))
+				columns = append(columns, termui.NewCol(int(12/len(travis)), 0, t))
 			}
 			termui.Body.AddRows(termui.NewRow(columns...))
 
