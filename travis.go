@@ -91,10 +91,10 @@ func doTravisCI() ([]*termui.Table, error) {
 		table.FgColor = termui.ColorWhite
 		table.BgColor = termui.ColorDefault
 		table.TextAlign = termui.AlignLeft
-		table.Analysis()
-		table.SetSize()
 		table.Border = true
 		table.Block.BorderLabel = "Travis CI builds for " + travisOwner
+		table.Analysis()
+		table.SetSize()
 		// Set the color to red for the bad rows
 		for _, br := range badrows {
 			table.FgColors[br] = termui.ColorRed
