@@ -13,7 +13,6 @@ A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Je
 - **darwin** [386](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-darwin-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-darwin-amd64)
 - **freebsd** [386](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-freebsd-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-freebsd-amd64)
 - **linux** [386](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-linux-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-linux-amd64) / [arm](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-linux-arm) / [arm64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-linux-arm64)
-- **solaris** [amd64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-solaris-amd64)
 - **windows** [386](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-windows-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-windows-amd64)
 
 #### Via Go
