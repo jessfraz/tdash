@@ -107,8 +107,8 @@ func PrintResponse(resp *ga.GetReportsResponse) error {
 
 		// Clean the metric headers.
 		metricHeaders := []string{}
-		for _, mh := range report.ColumnHeader.MetricHeader.MetricHeaderEntries {
-			metricHeaders = append(metricHeaders, mh.Name)
+		for i := 0; i < len(report.ColumnHeader.MetricHeader.MetricHeaderEntries); i++ {
+			metricHeaders = append(metricHeaders, report.ColumnHeader.MetricHeader.MetricHeaderEntries[i].Name)
 		}
 
 		// Create the tabwriter.
