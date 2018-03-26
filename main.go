@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/gizak/termui"
-	"github.com/jessfraz/dash/version"
+	"github.com/jessfraz/tdash/version"
 	"github.com/sirupsen/logrus"
 )
 
@@ -66,7 +66,7 @@ func init() {
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	dashDir = filepath.Join(home, ".dash")
+	dashDir = filepath.Join(home, ".tdash")
 
 	// Parse flags.
 	flag.BoolVar(&showAllBuilds, "all", false, "Show all builds even successful ones, defaults to only showing failures")
@@ -93,7 +93,7 @@ func init() {
 	flag.Parse()
 
 	if vrsn {
-		fmt.Printf("dash version %s, build %s", version.VERSION, version.GITCOMMIT)
+		fmt.Printf("tdash version %s, build %s", version.VERSION, version.GITCOMMIT)
 		os.Exit(0)
 	}
 

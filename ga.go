@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/gizak/termui"
-	"github.com/jessfraz/dash/googleanalytics"
+	"github.com/jessfraz/tdash/googleanalytics"
 	"github.com/sirupsen/logrus"
 )
 

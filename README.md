@@ -1,6 +1,6 @@
-# dash
+# tdash
 
-[![Travis CI](https://travis-ci.org/jessfraz/dash.svg?branch=master)](https://travis-ci.org/jessfraz/dash)
+[![Travis CI](https://travis-ci.org/jessfraz/tdash.svg?branch=master)](https://travis-ci.org/jessfraz/tdash)
 
 A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Jenkins. Very much built specific to me.
 
@@ -10,31 +10,31 @@ A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Je
 
 #### Binaries
 
-- **darwin** [386](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-darwin-386) / [amd64](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-darwin-amd64)
-- **freebsd** [386](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-freebsd-386) / [amd64](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-freebsd-amd64)
-- **linux** [386](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-linux-386) / [amd64](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-linux-amd64) / [arm](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-linux-arm) / [arm64](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-linux-arm64)
-- **solaris** [amd64](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-solaris-amd64)
-- **windows** [386](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-windows-386) / [amd64](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-windows-amd64)
+- **darwin** [386](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-darwin-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-darwin-amd64)
+- **freebsd** [386](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-freebsd-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-freebsd-amd64)
+- **linux** [386](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-linux-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-linux-amd64) / [arm](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-linux-arm) / [arm64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-linux-arm64)
+- **solaris** [amd64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-solaris-amd64)
+- **windows** [386](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-windows-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.0.0/tdash-windows-amd64)
 
 #### Via Go
 
 ```bash
-$ go get github.com/jessfraz/dash
+$ go get github.com/jessfraz/tdash
 ```
 
 #### Running with Docker
 
 ```console
 $ docker run --rm -it \
-    --name dash \
-    --volume /home/user/.dash:/root/.dash:ro \ # for the  Google Analytics key file
-    r.j3ss.co/dash
+    --name tdash \
+    --volume /home/user/.tdash:/root/.tdash:ro \ # for the  Google Analytics key file
+    r.j3ss.co/tdash
 ```
 
 ## Usage
 
 ```conosle
-$ dash -h
+$ tdash -h
      _           _
   __| | __ _ ___| |__
  / _` |/ _` / __| '_ \
@@ -51,7 +51,7 @@ $ dash -h
         Show all builds even successful ones, defaults to only showing failures
   -d    run in debug mode
   -ga-keyfile string
-        Path to Google Analytics keyfile (default "/home/jessie/.dash/ga.json")
+        Path to Google Analytics keyfile (default "/home/jessie/.tdash/ga.json")
   -ga-viewid value
         Google Analytics view IDs (can have more than one)
   -jenkins-password string
