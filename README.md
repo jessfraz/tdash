@@ -2,7 +2,7 @@
 
 [![Travis CI](https://travis-ci.org/jessfraz/dash.svg?branch=master)](https://travis-ci.org/jessfraz/dash)
 
-A single page dashboard with stats from Google Analytics, GitHub, Travis CI, and Jenkins. Very much built specific to me.
+A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Jenkins. Very much built specific to me.
 
 ## Installation
 

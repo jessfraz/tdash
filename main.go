@@ -21,7 +21,7 @@ const (
  \__,_|\__,_|___/_| |_|
 
 
- A single page dashboard with stats from
+ A terminal dashboard with stats from
  Google Analytics, GitHub, Travis CI, and Jenkins.
  Version: %s
  Build: %s
