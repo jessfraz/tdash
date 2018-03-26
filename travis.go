@@ -35,6 +35,7 @@ func doTravisCI() ([]*termui.Table, error) {
 		rows := [][]string{
 			{"repo", "branch", "state", "finished at"},
 		}
+		badrows := []int{}
 
 		// Get the owners repos from GitHub.
 		ghClient := github.NewClient(nil)
@@ -77,6 +78,10 @@ func doTravisCI() ([]*termui.Table, error) {
 			}
 
 			rows = append(rows, []string{repo.GetFullName(), "master", branch.State, branch.FinishedAt})
+
+			if branch.State != "passed" {
+				badrows = append(badrows, len(rows)-1)
+			}
 		}
 
 		// Set the rows.
@@ -90,6 +95,10 @@ func doTravisCI() ([]*termui.Table, error) {
 		table.SetSize()
 		table.Border = true
 		table.Block.BorderLabel = "Travis CI builds for " + travisOwner
+		// Set the color to red for the bad rows
+		for _, br := range badrows {
+			table.FgColors[br] = termui.ColorRed
+		}
 
 		tables = append(tables, table)
 	}
