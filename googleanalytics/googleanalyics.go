@@ -121,8 +121,8 @@ func PrintResponse(resp *ga.GetReportsResponse) error {
 			// Clean the metric values.
 			values := []string{}
 			for _, m := range row.Metrics {
-				for _, v := range m.Values {
-					values = append(values, v)
+				for j := 0; j < len(m.Values); j++ {
+					values = append(values, m.Values[j])
 				}
 			}
 
