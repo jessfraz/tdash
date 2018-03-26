@@ -12,14 +12,16 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"golang.org/x/oauth2/jwt"
+	gav3 "google.golang.org/api/analytics/v3"
 	ga "google.golang.org/api/analyticsreporting/v4"
 )
 
 // Client holds the information for a Google Analytics reporting client.
 type Client struct {
-	config  *jwt.Config
-	client  *http.Client
-	service *ga.Service
+	config    *jwt.Config
+	client    *http.Client
+	service   *ga.Service
+	servicev3 *gav3.Service
 }
 
 // New takes a keyfile for auththentication and
@@ -60,10 +62,17 @@ func New(keyfile string, debug bool) (*Client, error) {
 		client.client = client.config.Client(oauth2.NoContext)
 	}
 
-	// Construct the analytics reporting service object.
+	// Construct the analytics reporting v4 service object.
 	client.service, err = ga.New(client.client)
 	if err != nil {
-		return nil, fmt.Errorf("creating the analytics reporting service object failed: %v", err)
+		return nil, fmt.Errorf("creating the analytics reporting service v4 object failed: %v", err)
+	}
+
+	// Construct the analytics reporting v3 service object.
+	// TODO: remove v3 once v4 supports the realtime reporting API.
+	client.servicev3, err = gav3.New(client.client)
+	if err != nil {
+		return nil, fmt.Errorf("creating the analytics reporting service v3 object failed: %v", err)
 	}
 
 	return client, nil
@@ -119,17 +128,23 @@ func PrintResponse(resp *ga.GetReportsResponse, maxRows int) error {
 			maxRows = len(report.Data.Rows)
 		}
 
+		// Clean the dimensions headers.
+		dimensionsHeaders := []string{}
+		for a := 0; a < len(report.ColumnHeader.Dimensions); a++ {
+			dimensionsHeaders = append(dimensionsHeaders, strings.TrimPrefix(report.ColumnHeader.Dimensions[a], "ga:"))
+		}
+
 		// Clean the metric headers.
 		metricHeaders := []string{}
 		for i := 0; i < len(report.ColumnHeader.MetricHeader.MetricHeaderEntries); i++ {
-			metricHeaders = append(metricHeaders, report.ColumnHeader.MetricHeader.MetricHeaderEntries[i].Name)
+			metricHeaders = append(metricHeaders, strings.TrimPrefix(report.ColumnHeader.MetricHeader.MetricHeaderEntries[i].Name, "ga:"))
 		}
 
 		// Create the tabwriter.
 		w := tabwriter.NewWriter(os.Stdout, 20, 1, 3, ' ', 0)
 
 		// Print dimensions and metrics header.
-		fmt.Fprintf(w, "%s\n", strings.ToUpper(strings.Join(append(report.ColumnHeader.Dimensions, metricHeaders...), "\t")))
+		fmt.Fprintf(w, "%s\n", strings.ToUpper(strings.Join(append(dimensionsHeaders, metricHeaders...), "\t")))
 
 		for l := 0; l < maxRows; l++ {
 			// Clean the metric values.

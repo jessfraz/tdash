@@ -59,6 +59,7 @@
   branch = "master"
   name = "google.golang.org/api"
   packages = [
+    "analytics/v3",
     "analyticsreporting/v4",
     "gensupport",
     "googleapi",
@@ -86,6 +87,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "309d9a3682dbf87229961c722b742d8bc46a08cebda879075d8a0679c848f7de"
+  inputs-digest = "746d4f854a80479c4b061a88057d37155c611d3189f77c7b8cfa40764ee67769"
   solver-name = "gps-cdcl"
   solver-version = 1
