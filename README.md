@@ -23,8 +23,8 @@ A single page dashboard with stats from Google Analytics, GitHub, Travis CI, and
     [Google API Console](https://console.developers.google.com),
     enable the API, and create credentials.
 
-    Follow the instructions [for step enabling the API here](https://developers.google.com/ana
-    ytics/devguides/reporting/core/v4/quickstart/service-java).
+    Follow the instructions 
+    [for step enabling the API here](https://developers.google.com/anaytics/devguides/reporting/core/v4/quickstart/service-java).
 
 2. Add the new service account to the Google Analytics account with 
     [Read & Analyze](https://support.google.com/analytics/answer/2884495) 
