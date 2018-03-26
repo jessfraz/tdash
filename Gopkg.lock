@@ -14,6 +14,12 @@
   revision = "f849ce748f418a10bbf7cd1327da041e4adde86e"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/bndr/gojenkins"
+  packages = ["."]
+  revision = "3118be93040f0a8e7c1eeec9f9db09419deb59ab"
+
+[[projects]]
   name = "github.com/fatih/structs"
   packages = ["."]
   revision = "a720dfa8df582c51dee1b36feabb906bde1588bd"
@@ -54,7 +60,9 @@
   name = "golang.org/x/net"
   packages = [
     "context",
-    "context/ctxhttp"
+    "context/ctxhttp",
+    "html",
+    "html/atom"
   ]
   revision = "6078986fec03a1dcc236c34816c71b0e05018fda"
 
@@ -111,6 +119,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7f0525b0f685d07967be27f0841c945c62a47d83dae9853d6b384fae0ca9e321"
+  inputs-digest = "20a9e406e2c34b18dbfee180e952b455da8c457a042b03dd9d2d0e4de55bdab8"
   solver-name = "gps-cdcl"
   solver-version = 1

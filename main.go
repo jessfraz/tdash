@@ -35,6 +35,10 @@ var (
 	travisToken  string
 	travisOwners stringSlice
 
+	jenkinsBaseURI  string
+	jenkinsUsername string
+	jenkinsPassword string
+
 	dashDir string
 
 	debug bool
@@ -68,6 +72,10 @@ func init() {
 	flag.StringVar(&travisToken, "travis-token", os.Getenv("TRAVISCI_API_TOKEN"), "Travis CI API token (or env var TRAVISCI_API_TOKEN)")
 	flag.Var(&travisOwners, "travis-owner", "Travis owner name for builds (can have more than one)")
 
+	flag.StringVar(&jenkinsBaseURI, "jenkins-uri", os.Getenv("JENKINS_BASE_URI"), "Jenkins base URI (or env var JENKINS_BASE_URI)")
+	flag.StringVar(&jenkinsUsername, "jenkins-username", os.Getenv("JENKINS_USERNAME"), "Jenkins username for authentication (or env var JENKINS_USERNAME)")
+	flag.StringVar(&jenkinsPassword, "jenkins-password", os.Getenv("JENKINS_PASSWORD"), "Jenkins password for authentication (or env var JENKINS_PASSWORD)")
+
 	flag.BoolVar(&vrsn, "version", false, "print version and exit")
 	flag.BoolVar(&vrsn, "v", false, "print version and exit (shorthand)")
 	flag.BoolVar(&debug, "d", false, "run in debug mode")
@@ -93,6 +101,7 @@ func init() {
 func main() {
 	doGoogleAnalytics()
 	doTravisCI()
+	doJenkinsCI()
 }
 
 func getHome() (string, error) {

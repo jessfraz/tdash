@@ -17,6 +17,13 @@ func doTravisCI() {
 		return
 	}
 
+	// Check that the Travis owners is not empty.
+	if len(travisOwners) <= 0 {
+		logrus.Warn("Travis CI owners cannot be empty")
+		logrus.Info("skipping Travis CI data")
+		return
+	}
+
 	// Create the tabwriter.
 	w := tabwriter.NewWriter(os.Stdout, 20, 1, 3, ' ', 0)
 

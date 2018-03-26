@@ -38,3 +38,7 @@
 [[constraint]]
   name = "github.com/Ableton/go-travis"
   branch = "master"
+
+[[constraint]]
+  name = "github.com/bndr/gojenkins"
+  branch = "master"
