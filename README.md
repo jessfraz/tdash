@@ -14,6 +14,51 @@ A single page dashboard with stats from Google Analytics, GitHub, Travis CI, and
 - **solaris** [amd64](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-solaris-amd64)
 - **windows** [386](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-windows-386) / [amd64](https://github.com/jessfraz/dash/releases/download/v0.0.0/dash-windows-amd64)
 
+#### Via Go
+
+```bash
+$ go get github.com/jessfraz/dash
+```
+
+#### Running with Docker
+
+```console
+$ docker run --rm -it \
+    --name dash \
+    --volume /home/user/.dash:/root/.dash:ro \ # for the  Google Analytics key file
+    r.j3ss.co/dash
+```
+
+## Usage
+
+```conosle
+$ dash -h
+     _           _
+  __| | __ _ ___| |__
+ / _` |/ _` / __| '_ \
+| (_| | (_| \__ \ | | |
+ \__,_|\__,_|___/_| |_|
+
+
+ A single page dashboard with stats from
+ Google Analytics, GitHub, Travis CI, and Jenkins.
+ Version: v0.0.0
+ Build: 338723b
+
+  -d    run in debug mode
+  -ga-keyfile string
+        Path to Google Analytics keyfile (default "/home/jessie/.dash/ga.json")
+  -ga-viewid value
+        Google Analytics view IDs (can have more than one)
+  -travis-owner value
+        Travis owner name for builds (can have more than one)
+  -travis-token string
+        Travis CI API token (or env var TRAVISCI_API_TOKEN)
+  -v    print version and exit (shorthand)
+  -version
+        print version and exit
+```
+
 ## Setup
 
 ### Google Analytics
