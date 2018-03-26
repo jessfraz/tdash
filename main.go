@@ -111,64 +111,74 @@ func main() {
 	defer termui.Close()
 
 	// Create termui widgets for google analytics.
-	ga, err := doGoogleAnalytics()
-	if err != nil {
-		logrus.Fatal(err)
-	}
-
-	// Add Google Analytics data to the termui body.
-	for _, data := range ga {
-		data.table.Block.BorderLabel = "Google Analytics data for " + data.name
-
-		activeUsers := termui.NewPar(data.activeUsers)
-		activeUsers.TextFgColor = termui.ColorWhite
-		activeUsers.BorderFg = termui.ColorWhite
-		activeUsers.BorderLabel = "active users for " + data.name
-		activeUsers.Height = 3
-		activeUsers.Width = 50
-
-		if data.table != nil {
-			termui.Body.AddRows(
-				termui.NewRow(termui.NewCol(9, 0, data.table), termui.NewCol(3, 0, activeUsers)),
-			)
+	go func() {
+		ga, err := doGoogleAnalytics()
+		if err != nil {
+			logrus.Fatal(err)
 		}
-	}
+
+		// Add Google Analytics data to the termui body.
+		for _, data := range ga {
+			data.table.Block.BorderLabel = "Google Analytics data for " + data.name
+
+			activeUsers := termui.NewPar(data.activeUsers)
+			activeUsers.TextFgColor = termui.ColorWhite
+			activeUsers.BorderFg = termui.ColorWhite
+			activeUsers.BorderLabel = "active users for " + data.name
+			activeUsers.Height = 3
+			activeUsers.Width = 50
+
+			if data.table != nil {
+				termui.Body.AddRows(
+					termui.NewRow(termui.NewCol(9, 0, data.table), termui.NewCol(3, 0, activeUsers)),
+				)
+			}
+		}
+		// Calculate the layout.
+		termui.Body.Align()
+		// Render the termui body.
+		termui.Render(termui.Body)
+	}()
+
+	// Create termui widgets for travis.
+	go func() {
+		travis, err := doTravisCI()
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		if travis != nil {
+			columns := []*termui.Row{}
+			for _, t := range travis {
+				columns = append(columns, termui.NewCol(12/len(travis), 0, t))
+			}
+			termui.Body.AddRows(termui.NewRow(columns...))
+
+			// Calculate the layout.
+			termui.Body.Align()
+			// Render the termui body.
+			termui.Render(termui.Body)
+		}
+	}()
+
+	go func() {
+		janky, err := doJenkinsCI()
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		if janky != nil {
+			termui.Body.AddRows(termui.NewCol(3, 0, janky))
+
+			// Calculate the layout.
+			termui.Body.Align()
+			// Render the termui body.
+			termui.Render(termui.Body)
+		}
+	}()
 
 	// Calculate the layout.
 	termui.Body.Align()
 	// Render the termui body.
 	termui.Render(termui.Body)
-
-	// Create termui widgets for travis.
-	travis, err := doTravisCI()
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	if travis != nil {
-		columns := []*termui.Row{}
-		for _, t := range travis {
-			columns = append(columns, termui.NewCol(12/len(travis), 0, t))
-		}
-		termui.Body.AddRows(termui.NewRow(columns...))
-
-		// Calculate the layout.
-		termui.Body.Align()
-		// Render the termui body.
-		termui.Render(termui.Body)
-	}
-
-	janky, err := doJenkinsCI()
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	if janky != nil {
-		termui.Body.AddRows(termui.NewCol(3, 0, janky))
-
-		// Calculate the layout.
-		termui.Body.Align()
-		// Render the termui body.
-		termui.Render(termui.Body)
-	}
 
 	// Handle key q pressing
 	termui.Handle("/sys/kbd/q", func(termui.Event) {

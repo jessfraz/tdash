@@ -92,6 +92,7 @@ func doTravisCI() ([]*termui.Table, error) {
 		table.BgColor = termui.ColorDefault
 		table.TextAlign = termui.AlignLeft
 		table.Border = true
+		table.Separator = true
 		table.Block.BorderLabel = "Travis CI builds for " + travisOwner
 		table.Analysis()
 		table.SetSize()
