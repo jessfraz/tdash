@@ -57,6 +57,6 @@ func doGoogleAnalytics() {
 		}
 
 		fmt.Printf("\nRealtime Active Users: %s\n", activeUsers)
+		fmt.Println()
 	}
-	fmt.Println()
 }
