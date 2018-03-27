@@ -7,7 +7,7 @@ ENV GOPATH /go
 RUN	apk add --no-cache \
 	ca-certificates
 
-COPY . /go/src/github.com/jessfraz/tdash
+COPY . ${GOPATH}/src/github.com/jessfraz/tdash
 
 RUN set -x \
 	&& apk add --no-cache --virtual .build-deps \
@@ -16,7 +16,7 @@ RUN set -x \
 		libc-dev \
 		libgcc \
 		make \
-	&& cd /go/src/github.com/jessfraz/tdash \
+	&& cd ${GOPATH}/src/github.com/jessfraz/tdash \
 	&& make static \
 	&& mv tdash /usr/bin/tdash \
 	&& apk del .build-deps \
