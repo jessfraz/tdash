@@ -78,9 +78,9 @@ func doTravisCI() ([]*termui.Table, error) {
 				return nil, fmt.Errorf("getting master branch for travis repo %q failed: %v", repo.GetFullName(), err)
 			}
 
-			rows = append(rows, []string{repo.GetFullName(), "master", branch.State, branch.FinishedAt})
+			if showAllBuilds || branch.State != "passed" {
+				rows = append(rows, []string{repo.GetFullName(), "master", branch.State, branch.FinishedAt})
 
-			if branch.State != "passed" {
 				if branch.State == "failed" {
 					redrows = append(redrows, len(rows)-1)
 				} else {
