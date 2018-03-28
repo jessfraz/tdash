@@ -48,7 +48,7 @@ func New(uri, username, token string) *Client {
 // GetJobs gets the jobs for a Jenkins instance.
 func (c *Client) GetJobs() ([]Job, error) {
 	// set up the request
-	url := fmt.Sprintf("%s/api/json?tree=%s&depth=1", c.Baseurl, url.QueryEscape("jobs[name,lastBuild[number,timestamp,result]]"))
+	url := fmt.Sprintf("%s/api/json?tree=%s&depth=1", c.Baseurl, url.QueryEscape("jobs[name,displayName,lastBuild[number,timestamp,result]]"))
 	req, err := http.NewRequest("GET", url, bytes.NewBuffer([]byte{}))
 	if err != nil {
 		return nil, err
