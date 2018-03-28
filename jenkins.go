@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	jenkins "github.com/bndr/gojenkins"
 	"github.com/gizak/termui"
+	"github.com/jessfraz/tdash/jenkins"
 	"github.com/sirupsen/logrus"
 )
 
@@ -32,13 +32,10 @@ func doJenkinsCI() (*termui.Table, error) {
 	}
 
 	// Initialize the jenkins api client
-	jenkinsClient, err := jenkins.CreateJenkins(nil, jenkinsBaseURI, jenkinsUsername, jenkinsPassword).Init()
-	if err != nil {
-		return nil, fmt.Errorf("creating jenkins api client for base uri %q failed: %v", jenkinsBaseURI, err)
-	}
+	jenkinsClient := jenkins.New(jenkinsBaseURI, jenkinsUsername, jenkinsPassword)
 
 	// Get all the jobs
-	jobs, err := jenkinsClient.GetAllJobs()
+	jobs, err := jenkinsClient.GetJobs()
 	if err != nil {
 		return nil, fmt.Errorf("getting all jenkins jobs failed: %v", err)
 	}
@@ -53,22 +50,16 @@ func doJenkinsCI() (*termui.Table, error) {
 
 	// Iterate over the jobs.
 	for _, job := range jobs {
-		// Get the last build
-		build, err := job.GetLastBuild()
-		if err != nil {
-			return nil, fmt.Errorf("getting jenkins build number %d for job %q failed: %v", job.Raw.LastBuild.Number, job.Raw.Name, err)
-		}
-
-		if build.Raw.Result == "" {
+		if job.LastBuild.Result == "" {
 			// Then the job is currently running.
-			build.Raw.Result = "RUNNING"
+			job.LastBuild.Result = "RUNNING"
 		}
 
-		if showAllBuilds || build.Raw.Result != "SUCCESS" {
-			rows = append(rows, []string{job.Raw.DisplayName, build.Raw.Result, time.Unix(0, int64(time.Millisecond)*build.Raw.Timestamp).Format(time.RFC3339)})
-			if build.Raw.Result == "FAILURE" {
+		if showAllBuilds || job.LastBuild.Result != "SUCCESS" {
+			rows = append(rows, []string{job.DisplayName, job.LastBuild.Result, time.Unix(0, int64(time.Millisecond)*job.LastBuild.Timestamp).Format(time.RFC3339)})
+			if job.LastBuild.Result == "FAILURE" {
 				redrows = append(redrows, len(rows)-1)
-			} else if build.Raw.Result != "SUCCESS" {
+			} else if job.LastBuild.Result != "SUCCESS" {
 				otherrows = append(otherrows, len(rows)-1)
 			}
 		}

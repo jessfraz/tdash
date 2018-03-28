@@ -14,12 +14,6 @@
   revision = "f849ce748f418a10bbf7cd1327da041e4adde86e"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/bndr/gojenkins"
-  packages = ["."]
-  revision = "3118be93040f0a8e7c1eeec9f9db09419deb59ab"
-
-[[projects]]
   name = "github.com/fatih/structs"
   packages = ["."]
   revision = "a720dfa8df582c51dee1b36feabb906bde1588bd"
@@ -41,7 +35,7 @@
   branch = "master"
   name = "github.com/google/go-github"
   packages = ["github"]
-  revision = "8eefe6bfbb002707f4216cd75783898e1b663f99"
+  revision = "1ce85f4eb585f22e22dbd214dd4610aafa516c4c"
 
 [[projects]]
   branch = "master"
@@ -96,9 +90,7 @@
   name = "golang.org/x/net"
   packages = [
     "context",
-    "context/ctxhttp",
-    "html",
-    "html/atom"
+    "context/ctxhttp"
   ]
   revision = "6078986fec03a1dcc236c34816c71b0e05018fda"
 
@@ -133,7 +125,7 @@
     "googleapi",
     "googleapi/internal/uritemplates"
   ]
-  revision = "e4126357c891acdef6dcd7805daa4c6533be6544"
+  revision = "a213db537ac9b393526194a5c85ad6e546f7923f"
 
 [[projects]]
   name = "google.golang.org/appengine"
@@ -155,6 +147,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fbc0494d777548e025da2186a9ffe779a2b16ef8e908ac2f9119c1aad7aae294"
+  inputs-digest = "a30872bfb0d694b7c03a0d296ef979a3f3d6af27389079380747391ad194a041"
   solver-name = "gps-cdcl"
   solver-version = 1
