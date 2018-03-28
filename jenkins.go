@@ -68,7 +68,7 @@ func doJenkinsCI() (*termui.Table, error) {
 			rows = append(rows, []string{job.Raw.DisplayName, build.Raw.Result, time.Unix(0, int64(time.Millisecond)*build.Raw.Timestamp).Format(time.RFC3339)})
 			if build.Raw.Result == "FAILURE" {
 				redrows = append(redrows, len(rows)-1)
-			} else {
+			} else if build.Raw.Result != "SUCCESS" {
 				otherrows = append(otherrows, len(rows)-1)
 			}
 		}

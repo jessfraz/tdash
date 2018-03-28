@@ -83,7 +83,7 @@ func doTravisCI() ([]*termui.Table, error) {
 
 				if branch.State == "failed" {
 					redrows = append(redrows, len(rows)-1)
-				} else {
+				} else if branch.State != "passed" {
 					otherrows = append(otherrows, len(rows)-1)
 				}
 			}
