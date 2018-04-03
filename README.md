@@ -2,7 +2,7 @@
 
 [![Travis CI](https://travis-ci.org/jessfraz/tdash.svg?branch=master)](https://travis-ci.org/jessfraz/tdash)
 
-A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Jenkins. Very much built specific to me.
+A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, CircleCI, and Jenkins. Very much built specific to me.
 
 ![term.png](term.png)
 
@@ -48,6 +48,10 @@ $ tdash -h
 
   -all
         Show all builds even successful ones, defaults to only showing failures
+  -circleci-owner value
+        CircleCI owner name for builds (can have more than one)
+  -circleci-token string
+        CircleCI API token (or env var CIRCLECI_API_TOKEN)
   -d    run in debug mode
   -ga-keyfile string
         Path to Google Analytics keyfile (default "/home/jessie/.tdash/ga.json")
@@ -74,26 +78,31 @@ $ tdash -h
 
 ### Google Analytics
 
-1. Enable the API: To get started using Analytics Reporting API v4, you need to 
-    first create a project in the 
+1. Enable the API: To get started using Analytics Reporting API v4, you need to
+    first create a project in the
     [Google API Console](https://console.developers.google.com),
     enable the API, and create credentials.
 
-    Follow the instructions 
+    Follow the instructions
     [for step enabling the API here](https://developers.google.com/anaytics/devguides/reporting/core/v4/quickstart/service-java).
 
-2. Add the new service account to the Google Analytics account with 
-    [Read & Analyze](https://support.google.com/analytics/answer/2884495) 
+2. Add the new service account to the Google Analytics account with
+    [Read & Analyze](https://support.google.com/analytics/answer/2884495)
     permission.
 
     The newly created service account will have an email address that looks
     similar to: `quickstart@PROJECT-ID.iam.gserviceaccount.com`.
 
-    Use this email address to 
-    [add a user](https://support.google.com/analytics/answer/1009702) to the 
-    Google Analytics view you want to access via the API. 
+    Use this email address to
+    [add a user](https://support.google.com/analytics/answer/1009702) to the
+    Google Analytics view you want to access via the API.
 
 ### Travis
 
-1. Get your Travis token: Go to the "Profile" tab on your 
+1. Get your Travis token: Go to the "Profile" tab on your
 	[Accounts page](https://travis-ci.org/profile)
+
+### CircleCI
+
+1. Get your CircleCI token: Go to the "Personal API Tokens" tab on your
+  [User settings page](https://circleci.com/account)

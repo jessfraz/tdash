@@ -1,0 +1,13 @@
+dependencies:
+  override:
+  # Remove cached Go sources
+  - rm -rf $HOME/.go_workspace
+test:
+  override:
+  - go vet ./...
+  - go test ./...
+experimental:
+  notify:
+    branches:
+      only:
+        - master

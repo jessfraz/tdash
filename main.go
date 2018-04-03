@@ -37,6 +37,9 @@ var (
 	travisToken  string
 	travisOwners stringSlice
 
+	circleciToken string
+	circleciOwners stringSlice
+
 	jenkinsBaseURI  string
 	jenkinsUsername string
 	jenkinsPassword string
@@ -79,6 +82,9 @@ func init() {
 
 	flag.StringVar(&travisToken, "travis-token", os.Getenv("TRAVISCI_API_TOKEN"), "Travis CI API token (or env var TRAVISCI_API_TOKEN)")
 	flag.Var(&travisOwners, "travis-owner", "Travis owner name for builds (can have more than one)")
+
+	flag.StringVar(&circleciToken, "circleci-token", os.Getenv("CIRCLECI_API_TOKEN"), "CircleCI API token (or env var CIRCLECI_API_TOKEN)")
+	flag.Var(&circleciOwners, "circleci-owner", "CircleCI owner name for builds (can have more than one)")
 
 	flag.StringVar(&jenkinsBaseURI, "jenkins-uri", os.Getenv("JENKINS_BASE_URI"), "Jenkins base URI (or env var JENKINS_BASE_URI)")
 	flag.StringVar(&jenkinsUsername, "jenkins-username", os.Getenv("JENKINS_USERNAME"), "Jenkins username for authentication (or env var JENKINS_USERNAME)")
@@ -126,6 +132,7 @@ func main() {
 	go gaWidget(nil)
 	go travisWidget(nil)
 	go jenkinsWidget(nil)
+	go circleciWidget(nil)
 
 	// Calculate the layout.
 	termui.Body.Align()
@@ -165,6 +172,7 @@ func main() {
 			gaWidget(body)
 			travisWidget(body)
 			jenkinsWidget(body)
+			circleciWidget(body)
 
 			// Calculate the layout.
 			body.Align()
