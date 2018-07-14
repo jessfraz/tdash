@@ -99,7 +99,7 @@ func (c *Client) GetReport(viewID string) (*ga.GetReportsResponse, error) {
 					{StartDate: "7daysAgo", EndDate: "today"},
 				},
 				Metrics: []*ga.Metric{
-					{Expression: "ga:sessions"},
+					//{Expression: "ga:sessions"},
 					{Expression: "ga:pageviews"},
 					{Expression: "ga:uniquePageviews"},
 					{Expression: "ga:users"},
@@ -108,7 +108,7 @@ func (c *Client) GetReport(viewID string) (*ga.GetReportsResponse, error) {
 					{Name: "ga:pagePath"},
 				},
 				OrderBys: []*ga.OrderBy{
-					{FieldName: "ga:sessions", SortOrder: "DESCENDING"},
+					//{FieldName: "ga:sessions", SortOrder: "DESCENDING"},
 					{FieldName: "ga:pageviews", SortOrder: "DESCENDING"},
 				},
 			},

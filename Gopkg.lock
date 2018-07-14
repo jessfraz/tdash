@@ -2,132 +2,169 @@
 
 
 [[projects]]
+  digest = "1:be0d4aea70ec08046c4280dfb6b21e96b00f66da868c5335f7f88f6b1c7879ef"
   name = "cloud.google.com/go"
   packages = ["compute/metadata"]
-  revision = "4b98a6370e36d7a85192e7bad08a4ebd82eac2a8"
-  version = "v0.20.0"
+  pruneopts = "NU"
+  revision = "aad3f485ee528456e0768f20397b4d9dd941e755"
+  version = "v0.25.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:29f96b6c8431416fdc9f1317a63b91fc34b5140e51b875a9f43f44b38787f3b1"
   name = "github.com/Ableton/go-travis"
   packages = ["."]
+  pruneopts = "NU"
   revision = "f849ce748f418a10bbf7cd1327da041e4adde86e"
 
 [[projects]]
+  digest = "1:4026982f3a9992e03d250515a780fba52ccda5cfec745d553959c831fd91505b"
   name = "github.com/fatih/structs"
   packages = ["."]
+  pruneopts = "NU"
   revision = "a720dfa8df582c51dee1b36feabb906bde1588bd"
   version = "v1.0"
 
 [[projects]]
+  digest = "1:8f20cebb77e789151dee418c072425fe4a02efd5cc9f737a8f391229f64b3edd"
   name = "github.com/gizak/termui"
   packages = ["."]
+  pruneopts = "NU"
   revision = "24acd523c756fd9728824cdfac66aad9d8982fb7"
   version = "v2.2.0"
 
 [[projects]]
+  digest = "1:2c32d6603ec266f5fb435bb2e76d01da42e42343613c76d663c625526bc346e3"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
-  revision = "925541529c1fa6821df4e44ce2723319eb2be768"
-  version = "v1.0.0"
+  pruneopts = "NU"
+  revision = "b4deda0973fb4c70b50d226b1af49f3da59f5265"
+  version = "v1.1.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:528c0f99b8cb6604193a9b1efead09c1527500a9413b5ec322ab287995ade095"
   name = "github.com/google/go-github"
   packages = ["github"]
-  revision = "1ce85f4eb585f22e22dbd214dd4610aafa516c4c"
+  pruneopts = "NU"
+  revision = "fe267204ab6dc819efe645730b03eb44cbca91f1"
 
 [[projects]]
   branch = "master"
+  digest = "1:b08ee366b946aaf9fc34ae3db6b6efa8caa193f30e119e02d2751e56737f482a"
   name = "github.com/google/go-querystring"
   packages = ["query"]
+  pruneopts = "NU"
   revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
 [[projects]]
+  digest = "1:e77b89c54fb602e885fdfbf5f945fdd8181eda537194424820c81fa77ebc5913"
   name = "github.com/maruel/panicparse"
   packages = ["stack"]
+  pruneopts = "NU"
   revision = "785840568bdc7faa0dfb1cd6c643207f03271f64"
   version = "v1.1.1"
 
 [[projects]]
+  digest = "1:aafa4bb9284dfb7065709eda4018302bd535d46060ed082e327ad795b43d174d"
   name = "github.com/mattn/go-runewidth"
   packages = ["."]
+  pruneopts = "NU"
   revision = "9e777a8366cce605130a531d2cd6363d07ad7317"
   version = "v0.0.2"
 
 [[projects]]
   branch = "master"
+  digest = "1:d8c1cc07eba2d3598607c77dd17f31e442132213dec38839a4e306ce5d84f566"
   name = "github.com/mitchellh/go-wordwrap"
   packages = ["."]
+  pruneopts = "NU"
   revision = "ad45545899c7b13c020ea92b2072220eefad42b8"
 
 [[projects]]
   branch = "master"
+  digest = "1:34d9354c2c5d916c05864327553047df59fc10e86ff1f408e4136eba0a25a5ec"
   name = "github.com/nsf/termbox-go"
   packages = ["."]
-  revision = "e2050e41c8847748ec5288741c0b19a8cb26d084"
+  pruneopts = "NU"
+  revision = "5c94acc5e6eb520f1bcd183974e01171cc4c23b3"
 
 [[projects]]
+  digest = "1:9239c4b107f63ee98316acce1f33947067f656a62b2d66f1ffe8aecd0f5ec1ed"
   name = "github.com/oleiade/reflections"
   packages = ["."]
+  pruneopts = "NU"
   revision = "2b6ec3da648e3e834dc41bad8d9ed7f2dc6a9496"
   version = "v1.0.0"
 
 [[projects]]
+  digest = "1:fb851541f5df335edb55ae691842a09ba4397bbf2deec9f7c5ad4a49de3fa44d"
   name = "github.com/sirupsen/logrus"
   packages = ["."]
+  pruneopts = "NU"
   revision = "c155da19408a8799da419ed3eeb0cb5db0ad5dbc"
   version = "v1.0.5"
 
 [[projects]]
   branch = "master"
+  digest = "1:ed359abd610d03004c519d6269e99c31d33bb218ba4f889985d30a5ada76d4df"
   name = "golang.org/x/crypto"
   packages = ["ssh/terminal"]
-  revision = "88942b9c40a4c9d203b82b3731787b672d6e809b"
+  pruneopts = "NU"
+  revision = "a49355c7e3f8fe157a85be2f77e6e269a0f89602"
 
 [[projects]]
   branch = "master"
+  digest = "1:aaae5c96c30675517139732907d3f124b2e49bc919ad4fcb9dddfa7557e40b89"
   name = "golang.org/x/net"
   packages = [
     "context",
-    "context/ctxhttp"
+    "context/ctxhttp",
   ]
-  revision = "6078986fec03a1dcc236c34816c71b0e05018fda"
+  pruneopts = "NU"
+  revision = "d0887baf81f4598189d4e12a37c6da86f0bba4d0"
 
 [[projects]]
   branch = "master"
+  digest = "1:542e667c28e84249096bd43e7835c6d3a2656c69d11f29a37b9aa144a403196e"
   name = "golang.org/x/oauth2"
   packages = [
     ".",
     "google",
     "internal",
     "jws",
-    "jwt"
+    "jwt",
   ]
-  revision = "fdc9e635145ae97e6c2cb777c48305600cf515cb"
+  pruneopts = "NU"
+  revision = "ef147856a6ddbb60760db74283d2424e98c87bff"
 
 [[projects]]
   branch = "master"
+  digest = "1:f18a84ee7d48acb0a402e5ae19df6c7df4d6d6db09593f60cd29d2b6e8c1cee4"
   name = "golang.org/x/sys"
   packages = [
     "unix",
-    "windows"
+    "windows",
   ]
-  revision = "13d03a9a82fba647c21a0ef8fba44a795d0f0835"
+  pruneopts = "NU"
+  revision = "1b2967e3c290b7c545b3db0deeda16e9be4f98a2"
 
 [[projects]]
   branch = "master"
+  digest = "1:82ed567de75a0f4d3d46a3f651bff3ef012ca293a488c89a97a190407e0059af"
   name = "google.golang.org/api"
   packages = [
     "analytics/v3",
     "analyticsreporting/v4",
     "gensupport",
     "googleapi",
-    "googleapi/internal/uritemplates"
+    "googleapi/internal/uritemplates",
   ]
-  revision = "a213db537ac9b393526194a5c85ad6e546f7923f"
+  pruneopts = "NU"
+  revision = "781db45e5b94469718b0c615037e76333cd050e3"
 
 [[projects]]
+  digest = "1:996a543895aecb33b75eff9c323c8bf4a676b04859b392b0dca6b5ba2f7772a6"
   name = "google.golang.org/appengine"
   packages = [
     ".",
@@ -139,14 +176,25 @@
     "internal/modules",
     "internal/remote_api",
     "internal/urlfetch",
-    "urlfetch"
+    "urlfetch",
   ]
-  revision = "150dc57a1b433e64154302bdc40b6bb8aefa313a"
-  version = "v1.0.0"
+  pruneopts = "NU"
+  revision = "b1f26356af11148e710935ed1ac8a7f5702c7612"
+  version = "v1.1.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a30872bfb0d694b7c03a0d296ef979a3f3d6af27389079380747391ad194a041"
+  input-imports = [
+    "github.com/Ableton/go-travis",
+    "github.com/gizak/termui",
+    "github.com/google/go-github/github",
+    "github.com/sirupsen/logrus",
+    "golang.org/x/oauth2",
+    "golang.org/x/oauth2/google",
+    "golang.org/x/oauth2/jwt",
+    "google.golang.org/api/analytics/v3",
+    "google.golang.org/api/analyticsreporting/v4",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

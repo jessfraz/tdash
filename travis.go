@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"time"
 
 	travis "github.com/Ableton/go-travis"
 	"github.com/gizak/termui"
@@ -79,7 +80,12 @@ func doTravisCI() ([]*termui.Table, error) {
 			}
 
 			if showAllBuilds || branch.State != "passed" {
-				rows = append(rows, []string{repo.GetFullName(), "master", branch.State, branch.FinishedAt})
+				rows = append(rows, []string{
+					repo.GetName(),
+					"master",
+					branch.State,
+					printTime(branch.FinishedAt),
+				})
 
 				if branch.State == "failed" {
 					redrows = append(redrows, len(rows)-1)
@@ -121,25 +127,7 @@ func doTravisCI() ([]*termui.Table, error) {
 	return tables, nil
 }
 
-func travisWidget(body *termui.Grid) {
-	if body == nil {
-		body = termui.Body
-	}
-
-	travis, err := doTravisCI()
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	if travis != nil {
-		columns := []*termui.Row{}
-		for _, t := range travis {
-			columns = append(columns, termui.NewCol(int(12/len(travis)), 0, t))
-		}
-		body.AddRows(termui.NewRow(columns...))
-
-		// Calculate the layout.
-		body.Align()
-		// Render the termui body.
-		termui.Render(body)
-	}
+func printTime(s string) string {
+	t, _ := time.Parse("2006-01-02T15:04:05Z", s)
+	return t.Local().Format("Mon, Jan 02 15:04 MST")
 }

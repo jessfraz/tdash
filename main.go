@@ -122,15 +122,7 @@ func main() {
 	}
 	defer termui.Close()
 
-	// Create termui widgets for google analytics.
-	go gaWidget(nil)
-	go travisWidget(nil)
-	go jenkinsWidget(nil)
-
-	// Calculate the layout.
-	termui.Body.Align()
-	// Render the termui body.
-	termui.Render(termui.Body)
+	go doWidgets()
 
 	// Handle key q pressing
 	termui.Handle("/sys/kbd/q", func(termui.Event) {
@@ -156,20 +148,7 @@ func main() {
 	// Update on an interval
 	go func() {
 		for range ticker.C {
-			body := termui.NewGrid()
-			body.X = 0
-			body.Y = 0
-			body.BgColor = termui.ThemeAttr("bg")
-			body.Width = termui.TermWidth()
-
-			gaWidget(body)
-			travisWidget(body)
-			jenkinsWidget(body)
-
-			// Calculate the layout.
-			body.Align()
-			// Render the termui body.
-			termui.Render(body)
+			doWidgets()
 		}
 	}()
 
@@ -188,4 +167,61 @@ func getHome() (string, error) {
 		return "", err
 	}
 	return u.HomeDir, nil
+}
+
+func doWidgets() {
+	body := termui.NewGrid()
+	body.X = 0
+	body.Y = 0
+	body.BgColor = termui.ThemeAttr("bg")
+	body.Width = termui.TermWidth()
+
+	ga, err := doGoogleAnalytics()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	// Add Google Analytics data to the termui body.
+	for _, data := range ga {
+		data.table.Block.BorderLabel = "Google Analytics data for " + data.name
+
+		activeUsers := termui.NewPar(data.activeUsers)
+		activeUsers.TextFgColor = termui.ColorWhite
+		activeUsers.BorderFg = termui.ColorWhite
+		activeUsers.BorderLabel = "Active Users for " + data.name
+		activeUsers.Height = 3
+		activeUsers.Width = 50
+
+		if data.table != nil {
+			body.AddRows(
+				termui.NewRow(termui.NewCol(9, 0, data.table), termui.NewCol(3, 0, activeUsers)),
+			)
+		}
+	}
+
+	travis, err := doTravisCI()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	if travis != nil {
+		columns := []*termui.Row{}
+		for _, t := range travis {
+			columns = append(columns, termui.NewCol(int(12/len(travis)), 0, t))
+		}
+		body.AddRows(termui.NewRow(columns...))
+	}
+
+	janky, err := doJenkinsCI()
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	if janky != nil {
+		body.AddRows(termui.NewCol(3, 0, janky))
+	}
+
+	// Calculate the layout.
+	body.Align()
+	// Render the termui body.
+	termui.Clear()
+	termui.Render(body)
 }
