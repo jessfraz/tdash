@@ -42,7 +42,7 @@ var (
 	jenkinsPassword string
 
 	showAllBuilds bool
-	interval      string
+	interval      time.Duration
 
 	dashDir string
 
@@ -72,7 +72,7 @@ func init() {
 
 	// Parse flags.
 	flag.BoolVar(&showAllBuilds, "all", false, "Show all builds even successful ones, defaults to only showing failures")
-	flag.StringVar(&interval, "interval", "2m", "update interval (ex. 5ms, 10s, 1m, 3h)")
+	flag.DurationVar(&interval, "interval", 2*time.Minute, "update interval (ex. 5ms, 10s, 1m, 3h)")
 
 	flag.StringVar(&googleAnalyticsKeyfile, "ga-keyfile", filepath.Join(dashDir, "ga.json"), "Path to Google Analytics keyfile")
 	flag.Var(&googleAnalyticsViewIDs, "ga-viewid", "Google Analytics view IDs (can have more than one)")
@@ -107,14 +107,7 @@ func init() {
 }
 
 func main() {
-	var ticker *time.Ticker
-
-	// parse the duration
-	dur, err := time.ParseDuration(interval)
-	if err != nil {
-		logrus.Fatalf("parsing %s as duration failed: %v", interval, err)
-	}
-	ticker = time.NewTicker(dur)
+	ticker := time.NewTicker(interval)
 
 	// Initialize termui.
 	if err := termui.Init(); err != nil {
@@ -175,6 +168,8 @@ func doWidgets() {
 
 	ga, err := doGoogleAnalytics()
 	if err != nil {
+		termui.StopLoop()
+		termui.Close()
 		logrus.Fatal(err)
 	}
 
@@ -197,6 +192,8 @@ func doWidgets() {
 
 	travis, err := doTravisCI()
 	if err != nil {
+		termui.StopLoop()
+		termui.Close()
 		logrus.Fatal(err)
 	}
 	if travis != nil {
@@ -209,6 +206,8 @@ func doWidgets() {
 
 	janky, err := doJenkinsCI()
 	if err != nil {
+		termui.StopLoop()
+		termui.Close()
 		logrus.Fatal(err)
 	}
 	if janky != nil {
