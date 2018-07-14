@@ -44,17 +44,17 @@ $ tdash -h
  A terminal dashboard with stats from
  Google Analytics, GitHub, Travis CI, and Jenkins.
  Version: v0.5.3
- Build: 338723b
+ Build: e855a69
 
   -all
         Show all builds even successful ones, defaults to only showing failures
   -d    run in debug mode
   -ga-keyfile string
-        Path to Google Analytics keyfile (default "/home/jessie/.tdash/ga.json")
+        Path to Google Analytics keyfile (default "~/.tdash/ga.json")
   -ga-viewid value
         Google Analytics view IDs (can have more than one)
-  -interval string
-        update interval (ex. 5ms, 10s, 1m, 3h) (default "2m")
+  -interval duration
+        update interval (ex. 5ms, 10s, 1m, 3h) (default 2m0s)
   -jenkins-password string
         Jenkins password for authentication (or env var JENKINS_PASSWORD)
   -jenkins-uri string
