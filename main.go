@@ -139,10 +139,7 @@ func main() {
 
 	// Handle resize
 	termui.Handle("/sys/wnd/resize", func(e termui.Event) {
-		termui.Body.Width = termui.TermWidth()
-		termui.Body.Align()
-		termui.Clear()
-		termui.Render(termui.Body)
+		doWidgets()
 	})
 
 	// Update on an interval
