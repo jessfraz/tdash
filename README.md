@@ -10,10 +10,10 @@ A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Je
 
 #### Binaries
 
-- **darwin** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.2/tdash-darwin-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.2/tdash-darwin-amd64)
-- **freebsd** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.2/tdash-freebsd-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.2/tdash-freebsd-amd64)
-- **linux** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.2/tdash-linux-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.2/tdash-linux-amd64) / [arm](https://github.com/jessfraz/tdash/releases/download/v0.5.2/tdash-linux-arm) / [arm64](https://github.com/jessfraz/tdash/releases/download/v0.5.2/tdash-linux-arm64)
-- **windows** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.2/tdash-windows-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.2/tdash-windows-amd64)
+- **darwin** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-darwin-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-darwin-amd64)
+- **freebsd** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-freebsd-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-freebsd-amd64)
+- **linux** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-linux-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-linux-amd64) / [arm](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-linux-arm) / [arm64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-linux-arm64)
+- **windows** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-windows-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-windows-amd64)
 
 #### Via Go
 
@@ -43,7 +43,7 @@ $ tdash -h
 
  A terminal dashboard with stats from
  Google Analytics, GitHub, Travis CI, and Jenkins.
- Version: v0.5.2
+ Version: v0.5.3
  Build: 338723b
 
   -all
