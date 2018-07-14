@@ -188,7 +188,7 @@ func doWidgets() {
 		activeUsers := termui.NewPar(data.activeUsers)
 		activeUsers.TextFgColor = termui.ColorWhite
 		activeUsers.BorderFg = termui.ColorWhite
-		activeUsers.BorderLabel = "Active Users for " + data.name
+		activeUsers.BorderLabel = "Active users for " + data.name
 		activeUsers.Height = 3
 
 		if data.table != nil {
