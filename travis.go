@@ -63,8 +63,8 @@ func doTravisCI() ([]*termui.Table, error) {
 
 		// Iterate over the repositories and get the master branch build status.
 		for _, repo := range repos {
-			if repo.GetFork() {
-				// Continue early if its a fork because we don't care
+			if repo.GetFork() || repo.GetArchived() {
+				// Continue early if its a fork or archived because we don't care.
 				continue
 			}
 
