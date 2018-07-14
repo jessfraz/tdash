@@ -190,7 +190,6 @@ func doWidgets() {
 		activeUsers.BorderFg = termui.ColorWhite
 		activeUsers.BorderLabel = "Active Users for " + data.name
 		activeUsers.Height = 3
-		activeUsers.Width = 50
 
 		if data.table != nil {
 			body.AddRows(
