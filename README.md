@@ -1,6 +1,8 @@
 # tdash
 
-[![Travis CI](https://travis-ci.org/jessfraz/tdash.svg?branch=master)](https://travis-ci.org/jessfraz/tdash)
+[![Travis CI](https://img.shields.io/travis/jessfraz/tdash.svg?style=for-the-badge)](https://travis-ci.org/jessfraz/tdash)
+[![GoDoc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=for-the-badge)](https://godoc.org/github.com/jessfraz/tdash)
+[![Github All Releases](https://img.shields.io/github/downloads/jessfraz/tdash/total.svg?style=for-the-badge)](https://github.com/jessfraz/tdash/releases)
 
 A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Jenkins. Very much built specific to me.
 
@@ -9,6 +11,8 @@ A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Je
 ## Installation
 
 #### Binaries
+
+For installation instructions from binaries please visit the [Releases Page](https://github.com/jessfraz/tdash/releases).
 
 - **darwin** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-darwin-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-darwin-amd64)
 - **freebsd** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-freebsd-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-freebsd-amd64)
