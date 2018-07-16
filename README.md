@@ -14,14 +14,9 @@ A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Je
 
 For installation instructions from binaries please visit the [Releases Page](https://github.com/jessfraz/tdash/releases).
 
-- **darwin** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-darwin-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-darwin-amd64)
-- **freebsd** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-freebsd-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-freebsd-amd64)
-- **linux** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-linux-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-linux-amd64) / [arm](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-linux-arm) / [arm64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-linux-arm64)
-- **windows** [386](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-windows-386) / [amd64](https://github.com/jessfraz/tdash/releases/download/v0.5.3/tdash-windows-amd64)
-
 #### Via Go
 
-```bash
+```console
 $ go get github.com/jessfraz/tdash
 ```
 

@@ -18,36 +18,36 @@ jobs:
       deploy:
         provider: releases
         file:
-          - cross/tdash-linux-amd64.md5
-          - cross/tdash-windows-386.sha256
-          - cross/tdash-linux-arm
-          - cross/tdash-darwin-amd64.md5
           - cross/tdash-darwin-amd64
-          - cross/tdash-linux-arm64.sha256
-          - cross/tdash-linux-arm.sha256
-          - cross/tdash-linux-386.sha256
+          - cross/tdash-darwin-amd64.md5
+          - cross/tdash-darwin-amd64.sha256
+          - cross/tdash-darwin-386
           - cross/tdash-darwin-386.md5
-          - cross/tdash-windows-386.md5
+          - cross/tdash-darwin-386.sha256
+          - cross/tdash-freebsd-amd64
           - cross/tdash-freebsd-amd64.md5
-          - cross/tdash-linux-arm64.md5
-          - cross/tdash-linux-arm64
           - cross/tdash-freebsd-amd64.sha256
-          - cross/tdash-freebsd-386.md5
-          - cross/tdash-linux-amd64.sha256
-          - cross/tdash-linux-386.md5
           - cross/tdash-freebsd-386
+          - cross/tdash-freebsd-386.md5
+          - cross/tdash-freebsd-386.sha256
+          - cross/tdash-linux-arm
+          - cross/tdash-linux-arm.md5
+          - cross/tdash-linux-arm.sha256
+          - cross/tdash-linux-arm64
+          - cross/tdash-linux-arm64.md5
+          - cross/tdash-linux-arm64.sha256
+          - cross/tdash-linux-amd64
+          - cross/tdash-linux-amd64.md5
+          - cross/tdash-linux-amd64.sha256
+          - cross/tdash-linux-386
+          - cross/tdash-linux-386.md5
+          - cross/tdash-linux-386.sha256
           - cross/tdash-windows-amd64
           - cross/tdash-windows-amd64.md5
           - cross/tdash-windows-amd64.sha256
-          - cross/tdash-linux-arm.md5
-          - cross/tdash-darwin-386.sha256
-          - cross/tdash-darwin-amd64.sha256
           - cross/tdash-windows-386
-          - cross/tdash-darwin-386
-          - cross/tdash-linux-386
-          - cross/tdash-freebsd-amd64
-          - cross/tdash-freebsd-386.sha256
-          - cross/tdash-linux-amd64
+          - cross/tdash-windows-386.md5
+          - cross/tdash-windows-386.sha256
         skip_cleanup: true
         on:
           tags: true
