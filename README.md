@@ -33,40 +33,26 @@ $ docker run --rm -it \
 
 ```conosle
 $ tdash -h
-     _           _
-  __| | __ _ ___| |__
- / _` |/ _` / __| '_ \
-| (_| | (_| \__ \ | | |
- \__,_|\__,_|___/_| |_|
+tdash -  A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Jenkins.
 
+Usage: tdash <command>
 
- A terminal dashboard with stats from
- Google Analytics, GitHub, Travis CI, and Jenkins.
- Version: v0.5.3
- Build: e855a69
+Flags:
 
-  -all
-        Show all builds even successful ones, defaults to only showing failures
-  -d    run in debug mode
-  -ga-keyfile string
-        Path to Google Analytics keyfile (default "~/.tdash/ga.json")
-  -ga-viewid value
-        Google Analytics view IDs (can have more than one)
-  -interval duration
-        update interval (ex. 5ms, 10s, 1m, 3h) (default 2m0s)
-  -jenkins-password string
-        Jenkins password for authentication (or env var JENKINS_PASSWORD)
-  -jenkins-uri string
-        Jenkins base URI (or env var JENKINS_BASE_URI)
-  -jenkins-username string
-        Jenkins username for authentication (or env var JENKINS_USERNAME)
-  -travis-owner value
-        Travis owner name for builds (can have more than one)
-  -travis-token string
-        Travis CI API token (or env var TRAVISCI_API_TOKEN)
-  -v    print version and exit (shorthand)
-  -version
-        print version and exit
+  --travis-owner      Travis owner name for builds (can have more than one) (default: [])
+  -d                  enable debug logging (default: false)
+  --ga-viewid         Google Analytics view IDs (can have more than one) (default: [])
+  --interval          update interval (ex. 5ms, 10s, 1m, 3h) (default: 2m0s)
+  --jenkins-password  Jenkins password for authentication (or env var JENKINS_PASSWORD)
+  --jenkins-uri       Jenkins base URI (or env var JENKINS_BASE_URI)
+  --jenkins-username  Jenkins username for authentication (or env var JENKINS_USERNAME)
+  --all               Show all builds even successful ones, defaults to only showing failures (default: false)
+  --ga-keyfile        Path to Google Analytics keyfile (default: ~/.tdash/ga.json)
+  --travis-token      Travis CI API token (or env var TRAVISCI_API_TOKEN)
+
+Commands:
+
+  version  Show the version information.
 ```
 
 ## Setup

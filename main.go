@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"os"
@@ -8,26 +9,10 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/genuinetools/pkg/cli"
 	"github.com/gizak/termui"
 	"github.com/jessfraz/tdash/version"
 	"github.com/sirupsen/logrus"
-)
-
-const (
-	// BANNER is what is printed for help/info output
-	BANNER = `     _           _
-  __| | __ _ ___| |__
- / _` + "`" + ` |/ _` + "`" + ` / __| '_ \
-| (_| | (_| \__ \ | | |
- \__,_|\__,_|___/_| |_|
-
-
- A terminal dashboard with stats from
- Google Analytics, GitHub, Travis CI, and Jenkins.
- Version: %s
- Build: %s
-
-`
 )
 
 var (
@@ -47,7 +32,6 @@ var (
 	dashDir string
 
 	debug bool
-	vrsn  bool
 )
 
 // stringSlice is a slice of strings
@@ -62,7 +46,7 @@ func (s *stringSlice) Set(value string) error {
 	return nil
 }
 
-func init() {
+func main() {
 	// Get home directory.
 	home, err := getHome()
 	if err != nil {
@@ -70,80 +54,86 @@ func init() {
 	}
 	dashDir = filepath.Join(home, ".tdash")
 
-	// Parse flags.
-	flag.BoolVar(&showAllBuilds, "all", false, "Show all builds even successful ones, defaults to only showing failures")
-	flag.DurationVar(&interval, "interval", 2*time.Minute, "update interval (ex. 5ms, 10s, 1m, 3h)")
+	// Create a new cli program.
+	p := cli.NewProgram()
+	p.Name = "tdash"
+	p.Description = " A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Jenkins"
 
-	flag.StringVar(&googleAnalyticsKeyfile, "ga-keyfile", filepath.Join(dashDir, "ga.json"), "Path to Google Analytics keyfile")
-	flag.Var(&googleAnalyticsViewIDs, "ga-viewid", "Google Analytics view IDs (can have more than one)")
+	// Set the GitCommit and Version.
+	p.GitCommit = version.GITCOMMIT
+	p.Version = version.VERSION
 
-	flag.StringVar(&travisToken, "travis-token", os.Getenv("TRAVISCI_API_TOKEN"), "Travis CI API token (or env var TRAVISCI_API_TOKEN)")
-	flag.Var(&travisOwners, "travis-owner", "Travis owner name for builds (can have more than one)")
+	// Setup the global flags.
+	p.FlagSet = flag.NewFlagSet("global", flag.ExitOnError)
+	p.FlagSet.BoolVar(&showAllBuilds, "all", false, "Show all builds even successful ones, defaults to only showing failures")
+	p.FlagSet.DurationVar(&interval, "interval", 2*time.Minute, "update interval (ex. 5ms, 10s, 1m, 3h)")
 
-	flag.StringVar(&jenkinsBaseURI, "jenkins-uri", os.Getenv("JENKINS_BASE_URI"), "Jenkins base URI (or env var JENKINS_BASE_URI)")
-	flag.StringVar(&jenkinsUsername, "jenkins-username", os.Getenv("JENKINS_USERNAME"), "Jenkins username for authentication (or env var JENKINS_USERNAME)")
-	flag.StringVar(&jenkinsPassword, "jenkins-password", os.Getenv("JENKINS_PASSWORD"), "Jenkins password for authentication (or env var JENKINS_PASSWORD)")
+	p.FlagSet.StringVar(&googleAnalyticsKeyfile, "ga-keyfile", filepath.Join(dashDir, "ga.json"), "Path to Google Analytics keyfile")
+	p.FlagSet.Var(&googleAnalyticsViewIDs, "ga-viewid", "Google Analytics view IDs (can have more than one)")
 
-	flag.BoolVar(&vrsn, "version", false, "print version and exit")
-	flag.BoolVar(&vrsn, "v", false, "print version and exit (shorthand)")
-	flag.BoolVar(&debug, "d", false, "run in debug mode")
+	p.FlagSet.StringVar(&travisToken, "travis-token", os.Getenv("TRAVISCI_API_TOKEN"), "Travis CI API token (or env var TRAVISCI_API_TOKEN)")
+	p.FlagSet.Var(&travisOwners, "travis-owner", "Travis owner name for builds (can have more than one)")
 
-	flag.Usage = func() {
-		fmt.Fprint(os.Stderr, fmt.Sprintf(BANNER, version.VERSION, version.GITCOMMIT))
-		flag.PrintDefaults()
-	}
+	p.FlagSet.StringVar(&jenkinsBaseURI, "jenkins-uri", os.Getenv("JENKINS_BASE_URI"), "Jenkins base URI (or env var JENKINS_BASE_URI)")
+	p.FlagSet.StringVar(&jenkinsUsername, "jenkins-username", os.Getenv("JENKINS_USERNAME"), "Jenkins username for authentication (or env var JENKINS_USERNAME)")
+	p.FlagSet.StringVar(&jenkinsPassword, "jenkins-password", os.Getenv("JENKINS_PASSWORD"), "Jenkins password for authentication (or env var JENKINS_PASSWORD)")
 
-	flag.Parse()
+	p.FlagSet.BoolVar(&debug, "d", false, "enable debug logging")
 
-	if vrsn {
-		fmt.Printf("tdash version %s, build %s", version.VERSION, version.GITCOMMIT)
-		os.Exit(0)
-	}
-
-	// Set the log level.
-	if debug {
-		logrus.SetLevel(logrus.DebugLevel)
-	}
-}
-
-func main() {
-	ticker := time.NewTicker(interval)
-
-	// Initialize termui.
-	if err := termui.Init(); err != nil {
-		logrus.Fatalf("initializing termui failed: %v", err)
-	}
-	defer termui.Close()
-
-	go doWidgets()
-
-	// Handle key q pressing
-	termui.Handle("/sys/kbd/q", func(termui.Event) {
-		// press q to quit
-		ticker.Stop()
-		termui.StopLoop()
-	})
-
-	termui.Handle("/sys/kbd/C-c", func(termui.Event) {
-		// handle Ctrl + c combination
-		ticker.Stop()
-		termui.StopLoop()
-	})
-
-	// Handle resize
-	termui.Handle("/sys/wnd/resize", func(e termui.Event) {
-		doWidgets()
-	})
-
-	// Update on an interval
-	go func() {
-		for range ticker.C {
-			doWidgets()
+	// Set the before function.
+	p.Before = func(ctx context.Context) error {
+		// Set the log level.
+		if debug {
+			logrus.SetLevel(logrus.DebugLevel)
 		}
-	}()
 
-	// Start the loop.
-	termui.Loop()
+		return nil
+	}
+
+	// Set the main program action.
+	p.Action = func(ctx context.Context, args []string) error {
+		ticker := time.NewTicker(interval)
+
+		// Initialize termui.
+		if err := termui.Init(); err != nil {
+			logrus.Fatalf("initializing termui failed: %v", err)
+		}
+		defer termui.Close()
+
+		go doWidgets()
+
+		// Handle key q pressing
+		termui.Handle("/sys/kbd/q", func(termui.Event) {
+			// press q to quit
+			ticker.Stop()
+			termui.StopLoop()
+		})
+
+		termui.Handle("/sys/kbd/C-c", func(termui.Event) {
+			// handle Ctrl + c combination
+			ticker.Stop()
+			termui.StopLoop()
+		})
+
+		// Handle resize
+		termui.Handle("/sys/wnd/resize", func(e termui.Event) {
+			doWidgets()
+		})
+
+		// Update on an interval
+		go func() {
+			for range ticker.C {
+				doWidgets()
+			}
+		}()
+
+		// Start the loop.
+		termui.Loop()
+		return nil
+	}
+
+	// Run our program.
+	p.Run()
 }
 
 func getHome() (string, error) {
