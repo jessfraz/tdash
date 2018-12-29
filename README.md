@@ -8,6 +8,12 @@ A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Je
 
 ![term.png](term.png)
 
+**Table of Contents**
+
+<!-- toc -->
+
+<!-- tocstop -->
+
 ## Installation
 
 #### Binaries
