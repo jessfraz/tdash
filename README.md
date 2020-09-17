@@ -1,3 +1,14 @@
+# tdash
+
+[![make-all](https://github.com/jessfraz/tdash/workflows/make%20all/badge.svg)](https://github.com/jessfraz/tdash/actions?query=workflow%3A%22make+all%22)
+[![make-image](https://github.com/jessfraz/tdash/workflows/make%20image/badge.svg)](https://github.com/jessfraz/tdash/actions?query=workflow%3A%22make+image%22)
+[![GoDoc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=for-the-badge)](https://godoc.org/github.com/jessfraz/tdash)
+[![Github All Releases](https://img.shields.io/github/downloads/jessfraz/tdash/total.svg?style=for-the-badge)](https://github.com/jessfraz/tdash/releases)
+
+A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Jenkins. Very much built specific to me.
+
+![term.png](term.png)
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
@@ -13,32 +24,6 @@
     - [Travis](#travis)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# tdash
-
-[![make-all](https://github.com/jessfraz/tdash/workflows/make%20all/badge.svg)](https://github.com/jessfraz/tdash/actions?query=workflow%3A%22make+all%22)
-[![make-image](https://github.com/jessfraz/tdash/workflows/make%20image/badge.svg)](https://github.com/jessfraz/tdash/actions?query=workflow%3A%22make+image%22)
-[![GoDoc](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=for-the-badge)](https://godoc.org/github.com/jessfraz/tdash)
-[![Github All Releases](https://img.shields.io/github/downloads/jessfraz/tdash/total.svg?style=for-the-badge)](https://github.com/jessfraz/tdash/releases)
-
-A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Jenkins. Very much built specific to me.
-
-![term.png](term.png)
-
-**Table of Contents**
-
-<!-- toc -->
-
-- [Installation](#installation)
-    + [Binaries](#binaries)
-    + [Via Go](#via-go)
-    + [Running with Docker](#running-with-docker)
-- [Usage](#usage)
-- [Setup](#setup)
-  * [Google Analytics](#google-analytics)
-  * [Travis](#travis)
-
-<!-- tocstop -->
 
 ## Installation
 
