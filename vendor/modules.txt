@@ -1,59 +1,88 @@
 # cloud.google.com/go v0.25.0
+## explicit
 cloud.google.com/go/compute/metadata
 # github.com/Ableton/go-travis v0.0.0-20170814145453-f849ce748f41
+## explicit
 github.com/Ableton/go-travis
+# github.com/davecgh/go-spew v1.1.1
+## explicit
 # github.com/fatih/structs v1.0.0
+## explicit
 github.com/fatih/structs
 # github.com/genuinetools/pkg v0.0.0-20180716210454-965f911b80a9
+## explicit
 github.com/genuinetools/pkg/cli
 # github.com/gizak/termui v2.2.0+incompatible
+## explicit
 github.com/gizak/termui
 # github.com/golang/protobuf v1.2.0
 github.com/golang/protobuf/proto
 # github.com/google/go-github v0.0.0-20180716180158-c0b63e2f9bb1
+## explicit
 github.com/google/go-github/github
 # github.com/google/go-querystring v0.0.0-20170111101155-53e6ce116135
+## explicit
 github.com/google/go-querystring/query
 # github.com/maruel/panicparse v1.1.1
+## explicit
 github.com/maruel/panicparse/stack
 # github.com/mattn/go-runewidth v0.0.2
+## explicit
 github.com/mattn/go-runewidth
 # github.com/mitchellh/go-wordwrap v0.0.0-20150314170334-ad45545899c7
+## explicit
 github.com/mitchellh/go-wordwrap
 # github.com/nsf/termbox-go v0.0.0-20180613055208-5c94acc5e6eb
+## explicit
 github.com/nsf/termbox-go
 # github.com/oleiade/reflections v1.0.0
+## explicit
 github.com/oleiade/reflections
+# github.com/onsi/gomega v1.4.2
+## explicit
+# github.com/pmezard/go-difflib v1.0.0
+## explicit
 # github.com/sirupsen/logrus v1.0.5
+## explicit
 github.com/sirupsen/logrus
+# github.com/stretchr/testify v1.2.2
+## explicit
 # golang.org/x/crypto v0.0.0-20180621125126-a49355c7e3f8
+## explicit
 golang.org/x/crypto/ssh/terminal
 # golang.org/x/net v0.0.0-20180906233101-161cd47e91fd
 golang.org/x/net/context
 golang.org/x/net/context/ctxhttp
 # golang.org/x/oauth2 v0.0.0-20180620175406-ef147856a6dd
+## explicit
 golang.org/x/oauth2
 golang.org/x/oauth2/google
-golang.org/x/oauth2/jwt
 golang.org/x/oauth2/internal
 golang.org/x/oauth2/jws
+golang.org/x/oauth2/jwt
 # golang.org/x/sys v0.0.0-20180909124046-d0be0721c37e
 golang.org/x/sys/unix
 golang.org/x/sys/windows
 # google.golang.org/api v0.0.0-20180716222000-81e9282165ac
+## explicit
 google.golang.org/api/analytics/v3
 google.golang.org/api/analyticsreporting/v4
 google.golang.org/api/gensupport
 google.golang.org/api/googleapi
 google.golang.org/api/googleapi/internal/uritemplates
 # google.golang.org/appengine v1.1.0
+## explicit
 google.golang.org/appengine
-google.golang.org/appengine/urlfetch
 google.golang.org/appengine/internal
 google.golang.org/appengine/internal/app_identity
-google.golang.org/appengine/internal/modules
-google.golang.org/appengine/internal/urlfetch
 google.golang.org/appengine/internal/base
 google.golang.org/appengine/internal/datastore
 google.golang.org/appengine/internal/log
+google.golang.org/appengine/internal/modules
 google.golang.org/appengine/internal/remote_api
+google.golang.org/appengine/internal/urlfetch
+google.golang.org/appengine/urlfetch
+# gopkg.in/airbrake/gobrake.v2 v2.0.9
+## explicit
+# gopkg.in/gemnasium/logrus-airbrake-hook.v2 v2.1.2
+## explicit

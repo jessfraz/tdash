@@ -1,5 +1,7 @@
 module github.com/jessfraz/tdash
 
+go 1.14
+
 require (
 	cloud.google.com/go v0.25.0 // indirect
 	github.com/Ableton/go-travis v0.0.0-20170814145453-f849ce748f41
