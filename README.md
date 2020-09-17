@@ -1,3 +1,19 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [tdash](#tdash)
+  - [Installation](#installation)
+      - [Binaries](#binaries)
+      - [Via Go](#via-go)
+      - [Running with Docker](#running-with-docker)
+  - [Usage](#usage)
+  - [Setup](#setup)
+    - [Google Analytics](#google-analytics)
+    - [Travis](#travis)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # tdash
 
 [![make-all](https://github.com/jessfraz/tdash/workflows/make%20all/badge.svg)](https://github.com/jessfraz/tdash/actions?query=workflow%3A%22make+all%22)
