@@ -13,15 +13,14 @@ A terminal dashboard with stats from Google Analytics, GitHub, Travis CI, and Je
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [tdash](#tdash)
-  - [Installation](#installation)
-      - [Binaries](#binaries)
-      - [Via Go](#via-go)
-      - [Running with Docker](#running-with-docker)
-  - [Usage](#usage)
-  - [Setup](#setup)
-    - [Google Analytics](#google-analytics)
-    - [Travis](#travis)
+- [Installation](#installation)
+    - [Binaries](#binaries)
+    - [Via Go](#via-go)
+    - [Running with Docker](#running-with-docker)
+- [Usage](#usage)
+- [Setup](#setup)
+  - [Google Analytics](#google-analytics)
+  - [Travis](#travis)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
