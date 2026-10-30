@@ -16,6 +16,7 @@ github.com/genuinetools/pkg/cli
 ## explicit
 github.com/gizak/termui
 # github.com/golang/protobuf v1.2.0
+## explicit
 github.com/golang/protobuf/proto
 # github.com/google/go-github v0.0.0-20180716180158-c0b63e2f9bb1
 ## explicit
@@ -38,8 +39,6 @@ github.com/nsf/termbox-go
 # github.com/oleiade/reflections v1.0.0
 ## explicit
 github.com/oleiade/reflections
-# github.com/onsi/gomega v1.4.2
-## explicit
 # github.com/pmezard/go-difflib v1.0.0
 ## explicit
 # github.com/sirupsen/logrus v1.0.5
@@ -47,10 +46,11 @@ github.com/oleiade/reflections
 github.com/sirupsen/logrus
 # github.com/stretchr/testify v1.2.2
 ## explicit
-# golang.org/x/crypto v0.0.0-20180621125126-a49355c7e3f8
-## explicit
+# golang.org/x/crypto v0.1.0
+## explicit; go 1.17
 golang.org/x/crypto/ssh/terminal
-# golang.org/x/net v0.0.0-20180906233101-161cd47e91fd
+# golang.org/x/net v0.1.0
+## explicit; go 1.17
 golang.org/x/net/context
 golang.org/x/net/context/ctxhttp
 # golang.org/x/oauth2 v0.0.0-20180620175406-ef147856a6dd
@@ -60,9 +60,17 @@ golang.org/x/oauth2/google
 golang.org/x/oauth2/internal
 golang.org/x/oauth2/jws
 golang.org/x/oauth2/jwt
-# golang.org/x/sys v0.0.0-20180909124046-d0be0721c37e
+# golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
+## explicit
+# golang.org/x/sys v0.1.0
+## explicit; go 1.17
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
+# golang.org/x/term v0.1.0
+## explicit; go 1.17
+golang.org/x/term
 # google.golang.org/api v0.0.0-20180716222000-81e9282165ac
 ## explicit
 google.golang.org/api/analytics/v3
