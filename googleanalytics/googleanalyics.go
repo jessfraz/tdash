@@ -3,7 +3,6 @@ package googleanalytics
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
@@ -42,7 +41,7 @@ type Client struct {
 // key file will then be downloaded to your computer.
 func New(keyfile string, debug bool) (*Client, error) {
 	// Read the keyfile.
-	data, err := ioutil.ReadFile(keyfile)
+	data, err := os.ReadFile(keyfile)
 	if err != nil {
 		return nil, fmt.Errorf("reading keyfile %q failed: %v", keyfile, err)
 	}
