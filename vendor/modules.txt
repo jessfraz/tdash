@@ -13,9 +13,6 @@ github.com/genuinetools/pkg/cli
 # github.com/gizak/termui v2.2.0+incompatible
 ## explicit
 github.com/gizak/termui
-# github.com/golang/protobuf v1.2.0
-## explicit
-github.com/golang/protobuf/proto
 # github.com/google/go-github v0.0.0-20180716180158-c0b63e2f9bb1
 ## explicit
 github.com/google/go-github/github
@@ -44,15 +41,18 @@ github.com/sirupsen/logrus
 ## explicit; go 1.25.0
 golang.org/x/net/context
 golang.org/x/net/context/ctxhttp
-# golang.org/x/oauth2 v0.0.0-20180620175406-ef147856a6dd
-## explicit
+# golang.org/x/oauth2 v0.27.0
+## explicit; go 1.23.0
 golang.org/x/oauth2
+golang.org/x/oauth2/authhandler
 golang.org/x/oauth2/google
+golang.org/x/oauth2/google/externalaccount
+golang.org/x/oauth2/google/internal/externalaccountauthorizeduser
+golang.org/x/oauth2/google/internal/impersonate
+golang.org/x/oauth2/google/internal/stsexchange
 golang.org/x/oauth2/internal
 golang.org/x/oauth2/jws
 golang.org/x/oauth2/jwt
-# golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
-## explicit
 # golang.org/x/sys v0.45.0
 ## explicit; go 1.25.0
 golang.org/x/sys/unix
@@ -64,15 +64,3 @@ google.golang.org/api/analyticsreporting/v4
 google.golang.org/api/gensupport
 google.golang.org/api/googleapi
 google.golang.org/api/googleapi/internal/uritemplates
-# google.golang.org/appengine v1.1.0
-## explicit
-google.golang.org/appengine
-google.golang.org/appengine/internal
-google.golang.org/appengine/internal/app_identity
-google.golang.org/appengine/internal/base
-google.golang.org/appengine/internal/datastore
-google.golang.org/appengine/internal/log
-google.golang.org/appengine/internal/modules
-google.golang.org/appengine/internal/remote_api
-google.golang.org/appengine/internal/urlfetch
-google.golang.org/appengine/urlfetch
